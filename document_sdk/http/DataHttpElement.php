@@ -171,6 +171,8 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 
 		if($this->parse == Element::PARSE_MODE_JAVA){
 			$element = new JavaHttpElement();
+		}else if($this->parse == Element::PARSE_MODE_JAVA_NATIVE){
+			$element = new JavaNativeHttpElement();
 		}else if($this->parse == Element::PARSE_MODE_TXT){
 			$element = new TxtHttpElement();
 		}else{
@@ -252,6 +254,8 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 
 		if($this->parse == Element::PARSE_MODE_JAVA){
 			$path = getcwd().JAVA_HTTP_DATA_SAVE_PATH;
+		}else if($this->parse == Element::PARSE_MODE_JAVA_NATIVE){
+			$path = getcwd().JAVA_NATIVE_HTTP_DATA_SAVE_PATH;
 		}else if($this->parse == Element::PARSE_MODE_TXT){
 			$path = getcwd().TXT_HTTP_DATA_SAVE_PATH;
 		}else{

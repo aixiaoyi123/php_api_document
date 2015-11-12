@@ -154,6 +154,8 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 
 		if($this->parse == Element::PARSE_MODE_JAVA){
 			$element = new JavaElement();
+		}else if($this->parse == Element::PARSE_MODE_JAVA_NATIVE){
+			$element = new JavaNativeElement();
 		}else if($this->parse == Element::PARSE_MODE_TXT){
 			$element = new TxtElement();
 		}else if($this->parse == Element::PARSE_MODE_SWIFT){
@@ -331,6 +333,8 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 
 		if($this->parse == Element::PARSE_MODE_JAVA){
 			$path = getcwd().JAVA_DATA_SAVE_PATH;
+		}else if($this->parse == Element::PARSE_MODE_JAVA_NATIVE){
+			$path = getcwd().JAVA_NATIVE_DATA_SAVE_PATH;
 		}else if($this->parse == Element::PARSE_MODE_TXT){
 			$path = getcwd().TXT_DATA_SAVE_PATH;
 		}else if($this->parse == Element::PARSE_MODE_SWIFT){

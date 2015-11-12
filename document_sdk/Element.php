@@ -64,6 +64,7 @@ class Element{
 
 	/**解析类型*/
 	const PARSE_MODE_JAVA = "java";
+	const PARSE_MODE_JAVA_NATIVE = "javanative";
 	const PARSE_MODE_IOS = "ios";
 	const PARSE_MODE_TXT = "txt";
 	const PARSE_MODE_SWIFT = "swift";
@@ -94,13 +95,13 @@ class Element{
 	 * 增加下载文件入口
 	 * */
 	function setFileList($data){
-		
+
 		if(!empty($data)){
 			$this->filelist[] = $data;
 		}
-		
+
 	}
-	
+
 	/**
 	 * 获取所有文件下载
 	 * */
@@ -112,8 +113,8 @@ class Element{
 		}
 		return $file;
 	}
-	
-	
+
+
 
 	/**
 	 * 设置解析方法
@@ -295,9 +296,10 @@ class Element{
 		$arr = explode( '/' , $url );
 		$filename= $arr[count($arr)-1];
 		$data = array("API"=> "API输出数据",
-		self::PARSE_MODE_TXT=> "文本文档",
-		self::PARSE_MODE_JAVA=> "JAVA请求与解析代码",
-		self::PARSE_MODE_SWIFT=> "Swift1.2请求与解析代码");
+		self::PARSE_MODE_TXT=> "1.文本文档",
+		self::PARSE_MODE_JAVA=> "2.JAVA依赖请求与解析代码",
+		self::PARSE_MODE_JAVA_NATIVE=> "3.JAVA原生请求与解析代码",
+		self::PARSE_MODE_SWIFT=> "4.Swift1.2请求与解析代码");
 
 		foreach ($data as $key => $value) {
 			$document = ($_POST['document']=='')?urldecode($_GET['document']):$_POST['document'];

@@ -12,6 +12,12 @@ if($parse == Element::PARSE_MODE_JAVA){
 	}else{
 		$path = "../document".JAVA_DATA_SAVE_PATH.$filename;
 	}
+}else if($parse == Element::PARSE_MODE_JAVA_NATIVE){
+	if(!empty($http)){
+		$path = "../document".JAVA_NATIVE_HTTP_DATA_SAVE_PATH.$filename;
+	}else{
+		$path = "../document".JAVA_NATIVE_DATA_SAVE_PATH.$filename;
+	}
 }else if($parse == Element::PARSE_MODE_SWIFT){
 	if(!empty($http)){
 		$path = "../document".SWIFT_HTTP_DATA_SAVE_PATH.$filename;

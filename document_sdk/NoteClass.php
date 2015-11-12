@@ -1,9 +1,11 @@
 <?php
 include_once(dirname(__FILE__)."/java/JavaElement.php");
+include_once(dirname(__FILE__)."/javanative/JavaNativeElement.php");
 include_once(dirname(__FILE__)."/ios/IosElement.php");
 include_once(dirname(__FILE__)."/txt/TxtElement.php");
 include_once(dirname(__FILE__)."/swift/SwiftElement.php");
 include_once(dirname(__FILE__)."/java/JavaHttpElement.php");
+include_once(dirname(__FILE__)."/javanative/JavaNativeHttpElement.php");
 include_once(dirname(__FILE__)."/txt/TxtHttpElement.php");
 include_once(dirname(__FILE__)."/HttpParamsListener.php");
 
@@ -140,6 +142,8 @@ abstract class NoteClass{
 				return $element->getTxtElement($value);
 			}else if($parse == Element::PARSE_MODE_SWIFT){
 				return $element->getSwiftElement($value);
+			}else if($parse == Element::PARSE_MODE_JAVA_NATIVE){
+				return $element->getJavaNativeElement($value);
 			}else{
 				return $element->getIosElement($value);
 			}
@@ -163,6 +167,8 @@ abstract class NoteClass{
 
 		if($parse == Element::PARSE_MODE_JAVA){
 			$data = new JavaElement();
+		}else if($parse == Element::PARSE_MODE_JAVA_NATIVE){
+			$data = new JavaNativeElement();
 		}else if($parse == Element::PARSE_MODE_TXT){
 			$data = new TxtElement();
 		}else if($parse == Element::PARSE_MODE_SWIFT){
@@ -204,6 +210,8 @@ abstract class NoteClass{
 		$note = $this->getNote();
 		if($parse == Element::PARSE_MODE_JAVA){
 			$data = new JavaHttpElement();
+		}else if($parse == Element::PARSE_MODE_JAVA_NATIVE){
+			$data = new JavaNativeHttpElement();
 		}else if($parse == Element::PARSE_MODE_TXT){
 			$data = new TxtHttpElement();
 		}else if($parse == Element::PARSE_MODE_SWIFT){

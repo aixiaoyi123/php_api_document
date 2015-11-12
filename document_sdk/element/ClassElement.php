@@ -43,6 +43,25 @@ class ClassElement extends NoteElement {
 		return $data;
 	}
 
+	function getJavaNativeElement($datavalue) {
+
+		foreach ($this->note as $key => $value) {
+			if($value != null && is_array($value)){
+				$data = new JavaNativeElement($key);
+				$data->setDictionary($value);
+				break;
+			}else if($value != null){
+				$data = new JavaNativeElement();
+				$data->setDictionary($this->note);
+				break;
+			}
+		}
+		$data->setType(Element::TYPE_KEY_CLASS);
+		$data->setValue($datavalue);
+		$data->setName($this->name);
+		return $data;
+	}
+
 	function getTxtElement($datavalue) {
 
 		foreach ($this->note as $key => $value) {
@@ -80,7 +99,7 @@ class ClassElement extends NoteElement {
 		$data->setName($this->name);
 		return $data;
 	}
-	
+
 
 
 	function getIosElement($datavalue) {
