@@ -44,6 +44,15 @@ document($pinfo,'PushInfoData');
 Json::echoJson($pinfo);
 
 
+$pinfo = array();
+$pinfo['id']=2;
+$pinfo['uid']='10086';
+$pinfo['rid']='10086';
+
+/**测试地址 Example.php?document=truxish2114558de*/
+document($pinfo,'PushInfoData');
+
+Json::echoJson($pinfo);
 
 
 ?>

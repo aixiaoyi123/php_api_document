@@ -176,7 +176,7 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 			throw new Exception("getName value is null!");
 		}
 
-		if(is_array($this->dictionary) && $this->dictionary[$value] instanceof ClassElement){
+		if(is_array($this->dictionary) && isset($this->dictionary[$value]) && $this->dictionary[$value] instanceof ClassElement){
 			$name = $this->dictionary[$value]->name;
 			if(!empty($name)){
 				return $name;
@@ -195,7 +195,7 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 			throw new Exception("getShareMode value is null!");
 		}
 
-		if(is_array($this->dictionary) && $this->dictionary[$value] instanceof ClassElement){
+		if(is_array($this->dictionary) && isset($this->dictionary[$value]) && $this->dictionary[$value] instanceof ClassElement){
 			$isShare = $this->dictionary[$value]->isShare;
 			return $isShare;
 		}
@@ -212,7 +212,7 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 		if (empty($value)){
 			throw new Exception("getClassElement value is null!");
 		}
-		if($this->dictionary[$value] instanceof ClassElement){
+		if(isset($this->dictionary[$value]) && $this->dictionary[$value] instanceof ClassElement){
 			return $this->dictionary[$value];
 		}else{
 			$element = new ClassElement($this->getName($value),$this->getDictionary($value),$this->getShareMode($value),$this->getType($value));
@@ -331,14 +331,16 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 		$value = str_replace(Element::ECHO_ENTER,"",$value);
 		$value = str_replace(Element::ECHO_SPLACE,"",$value);
 
+		$cwd = $this->getSavePath();
+		
 		if($this->parse == Element::PARSE_MODE_JAVA){
-			$path = getcwd().JAVA_DATA_SAVE_PATH;
+			$path = $cwd.JAVA_DATA_SAVE_PATH;
 		}else if($this->parse == Element::PARSE_MODE_JAVA_NATIVE){
-			$path = getcwd().JAVA_NATIVE_DATA_SAVE_PATH;
+			$path = $cwd.JAVA_NATIVE_DATA_SAVE_PATH;
 		}else if($this->parse == Element::PARSE_MODE_TXT){
-			$path = getcwd().TXT_DATA_SAVE_PATH;
+			$path = $cwd.TXT_DATA_SAVE_PATH;
 		}else if($this->parse == Element::PARSE_MODE_SWIFT){
-			$path = getcwd().SWIFT_DATA_SAVE_PATH;
+			$path = $cwd.SWIFT_DATA_SAVE_PATH;
 		}else{
 
 		}

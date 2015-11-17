@@ -1,163 +1,108 @@
 <?php
-include_once(dirname(__FILE__)."/../http/DataHttpElement.php");
-include_once(dirname(__FILE__)."/JavaHttpListener.php");
+include_once(dirname(__FILE__)."/../java/JavaHttpElement.php");
 
 /**
- * JAVA Http请求结构体
+ * Swift Http请求结构体
  * @author HuangYi
  * @link email：95487710@qq.com
  * */
-class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
+class SwiftHttpElement extends JavaHttpElement{
 
-	// JAVA http映射表
-	public $JAVA_HTTP_KEY = array(
+	// Swift http映射表
+	public $SWIFT_HTTP_KEY = array(
 	/**字符串*/
-	Element::TYPE_KEY_STRING                => '/javapan/http/string.java',
+	Element::TYPE_KEY_STRING                => '/swiftpan/http/string.swift',
 	/**4位整型*/
-	Element::TYPE_KEY_INT        	        => "/javapan/http/int.java",
+	Element::TYPE_KEY_INT        	        => "/swiftpan/http/int.swift",
 	/**长整形*/
-	Element::TYPE_KEY_LONG                  => "/javapan/http/long.java",
+	Element::TYPE_KEY_LONG                  => "/swiftpan/http/long.swift",
 	/**浮点数*/
-	Element::TYPE_KEY_FLOAT                 => "/javapan/http/float.java",
+	Element::TYPE_KEY_FLOAT                 => "/swiftpan/http/float.swift",
 	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN               => "/javapan/http/boolean.java",
+	Element::TYPE_KEY_BOOLEAN               => "/swiftpan/http/boolean.swift",
 	/**文件参数*/
-	DataHttpElement::HTTP_KEY_FILE          => "/javapan/http/file.java",
+	DataHttpElement::HTTP_KEY_FILE          => "/swiftpan/http/file.swift",
 	/**文件路径设置*/
-	DataHttpElement::HTTP_KEY_FILE_PATH     => "/javapan/http/filepath.java",
+	DataHttpElement::HTTP_KEY_FILE_PATH     => "/swiftpan/http/filepath.swift",
 	/**结果解析*/
-	DataHttpElement::HTTP_KEY_OBJECT        => "/javapan/http/object.java",
+	DataHttpElement::HTTP_KEY_OBJECT        => "/swiftpan/http/object.swift",
 	/**结果数组解析*/
-	DataHttpElement::HTTP_KEY_OBJECT_LIST   => "/javapan/http/object_list.java",
-	/**对象*/
-	DataHttpElement::HTTP_KEY_RESULT        => "/javapan/http/result.java",
-	/**对象数组*/
-	DataHttpElement::HTTP_KEY_RESULT_LIST   => "/javapan/http/result_list.java",
+	DataHttpElement::HTTP_KEY_OBJECT_LIST   => "/swiftpan/http/object_list.swift",
 	/**整体*/
-	DataHttpElement::HTTP_KEY_HTTP          => "/javapan/http/http.java",
-	/**头部引用*/
-	Element::TYPE_KEY_HEAD     	  	        => JAVA_HEAD
+	DataHttpElement::HTTP_KEY_HTTP          => "/swiftpan/http/http.swift"
 	/**待扩展*/
 	);
 
 
-	//JAVA http方法映射表
-	public $JAVA_HTTP_FUNCTION = array(
+	// SWIFT静态范围表
+	public $SWIFT_STATIC_FINAL_KEY = array(
 	/**字符串*/
-	Element::TYPE_KEY_STRING                => 'httpString',
+	Element::TYPE_KEY_STRING           => "/swiftpan/static/string.swift",
 	/**4位整型*/
-	Element::TYPE_KEY_INT        	        => "httpInt",
+	Element::TYPE_KEY_INT        	   => "/swiftpan/static/int.swift",
 	/**长整形*/
-	Element::TYPE_KEY_LONG                  => "httpLong",
+	Element::TYPE_KEY_LONG             => "/swiftpan/static/long.swift",
 	/**浮点数*/
-	Element::TYPE_KEY_FLOAT                 => "httpFloat",
+	Element::TYPE_KEY_FLOAT            => "/swiftpan/static/float.swift",
 	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN               => "httpBool",
-	/**文件参数*/
-	DataHttpElement::HTTP_KEY_FILE          => "httpFile",
-	/**结果解析*/
-	DataHttpElement::HTTP_KEY_OBJECT        => "httpObject",
-	/**结果数组解析*/
-	DataHttpElement::HTTP_KEY_OBJECT_LIST   => "httpObjectList",
-	/**对象*/
-	DataHttpElement::HTTP_KEY_RESULT        => "httpResult",
-	/**对象数组*/
-	DataHttpElement::HTTP_KEY_RESULT_LIST   => "httpResultList",
-	/**整体*/
-	DataHttpElement::HTTP_KEY_HTTP          => "httpHttp",
-	/**头部引用*/
-	Element::TYPE_KEY_HEAD     	  	        => "httpHead"
+	Element::TYPE_KEY_BOOLEAN          => "/swiftpan/static/boolean.swift",
 	/**待扩展*/
 	);
 
+	// 静态常量定义
+	public $static_params = array();
 
-	// JAVA静态范围表
-	public $JAVA_STATIC_FINAL_KEY = array(
-	/**字符串*/
-	Element::TYPE_KEY_STRING           => "/javapan/static/string.java",
-	/**4位整型*/
-	Element::TYPE_KEY_INT        	   => "/javapan/static/int.java",
-	/**长整形*/
-	Element::TYPE_KEY_LONG             => "/javapan/static/long.java",
-	/**浮点数*/
-	Element::TYPE_KEY_FLOAT            => "/javapan/static/float.java",
-	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN          => "/javapan/static/boolean.java",
-	/**待扩展*/
-	);
+	/**静态名称 */
+	const FORMAT_STATIC ="{static}";
 
+	/**设置URL的参数 */
+	const FORMAT_URL_PARAMS ="\"{!}\":\"\\(m{?})\"";
 
 	//构造方法
 	function __construct() {
 		parent::__construct();
 	}
 
+	//获取静态常量定义
+	function getStaticParams(){
+
+		$static = "";
+		foreach ($this->static_params as $key => $value) {
+			$static .= Element::FORMAT_ENTER.Element::FORMAT_ENTER.$value;
+		}
+		$static = str_replace(self::FORMAT_STATIC, strtoupper($this->name), $static);
+		return $static;
+	}
+
+	//增加静态常量
+	function setStaticParamsData($data){
+
+		if(!empty($data)){
+			$this->static_params[] = $data;
+		}
+
+	}
+
+	//增加静态常量
+	function addStaticParams($element){
+
+		if($element instanceof SwiftHttpElement){
+			//嵌套类型
+			foreach ($element->static_params as $key => $value) {
+				if(!empty($value)){
+					$this->static_params[] = $value;
+				}
+			}
+		}
+
+	}
+
+
 	#@Overrides
 	function getHttpKey(){
 
-		return $this->JAVA_HTTP_KEY;
+		return $this->SWIFT_HTTP_KEY;
 
-	}
-	#@Overrides
-	function autoType() {
-
-		if (empty($this->value)){
-			throw new Exception("getAutoType value is null!");
-		}
-
-		if(is_null($this->value)){
-
-			$this->setType(Element::TYPE_KEY_STRING);
-
-		}else if(is_array($this->value)){
-
-			if (array_key_exists(0,$this->value)){
-				if(is_array($this->value[0])){
-					$this->setType(Element::TYPE_KEY_ARRAY_CLASS);
-				}else{
-					$this->setType(Element::TYPE_KEY_ARRAY);
-				}
-			}else{
-				$this->setType(Element::TYPE_KEY_CLASS_CHILD);
-			}
-
-		}else if(is_bool($this->value)){
-
-			$this->setType(Element::TYPE_KEY_BOOLEAN);
-
-		}else if(is_numeric($this->value)){
-
-
-			if(strpos($this->value,'.')){
-				$this->setType(Element::TYPE_KEY_FLOAT);
-			}else{
-				$value = intval($this->value);
-				if($value > 2147483647/2){
-					$this->setType(Element::TYPE_KEY_LONG);
-				}else{
-					$this->setType(Element::TYPE_KEY_INT);
-				}
-			}
-
-		}else if(is_object($this->value)){
-
-			$this->setType(Element::TYPE_KEY_OBJECT);
-
-		}else{
-
-			$this->setType(Element::TYPE_KEY_STRING);
-
-		}
-	}
-
-	#@Overrides
-	function getFunctionName(){
-
-		if (!array_key_exists($this->type, $this->JAVA_HTTP_FUNCTION)) {
-			throw new Exception( "getFunctionName no found!");
-		}
-
-		return  $this->JAVA_HTTP_FUNCTION[$this->type];
 	}
 
 	#@Overrides
@@ -179,11 +124,12 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 		}
 		$static = $this->formatStatic($key);
 		if(!empty($static)){
-			$result = $static.$result;
+			$this->setStaticParamsData($static);
 		}
 		return $result;
 
 	}
+
 
 	#@Overrides
 	function httpFile() {
@@ -227,34 +173,17 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 		return $this->httpBasic(DataHttpElement::HTTP_KEY_OBJECT_LIST, $this->base_name);
 	}
 
-	/**
-	 * 对象
-	 * */
-	function httpResult(){
-		return $this->httpBasic(DataHttpElement::HTTP_KEY_RESULT, $this->base_name);
-	}
-
-	/**
-	 * 对象数组
-	 * */
-	function httpResultList() {
-		return $this->httpBasic(DataHttpElement::HTTP_KEY_RESULT_LIST, $this->base_name);
-	}
-
-
 	#@Overrides
 	function httpHttp() {
 
 		if($this->isListMode === false){
-			$result = $this->httpResult();
-			if($this->element->gson === false){
-				$object = $this->httpObject();
-			}
+			//if($this->element->gson === false){
+			$object = $this->httpObject();
+			//}
 		}else{
-			$result = $this->httpResultList();
-			if($this->element->gson === false){
-				$object = $this->httpObjectList();
-			}
+			//if($this->element->gson === false){
+			$object = $this->httpObjectList();
+			//}
 		}
 
 
@@ -274,11 +203,18 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 			$element = $this->getElement();
 			$element->initElement($key,$value,$this->getNoteElement($key));
 			$data = $data.$element->http();
+			$this->addStaticParams($element);
 			if($element->type != DataHttpElement::HTTP_KEY_FILE){
-				$params .= " + \"&$key=\" + m".ucfirst($element->name);
+				$urlparams = str_replace(Element::FORMAT_CLASS, $key, self::FORMAT_URL_PARAMS);
+				$urlparams = str_replace(Element::FORMAT_DATA_KEY, ucfirst($element->name), $urlparams);
+				$params .= $urlparams.",";
 			}
 		}
-		$data .= $result.$object;
+
+		if(!empty($params)){
+			$params = substr($params, 0, strlen($params)-1);
+		}
+		$data .= $object;
 		$http = str_replace(Element::FORMAT_DATA, $data, $http);
 
 		$url = $this->element->url;
@@ -317,9 +253,10 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 
 		$http = str_replace(Element::FORMAT_NOTE, $note, $http);
 		$http = str_replace(Element::FORMAT_VERSION, $this->version, $http);
-		$header = str_replace(Element::FORMAT_DATA_KEY, $this->base_name, JAVA_HTTP_HEAD);
-		$result = $header.$http;
-		$fileurl =$this->getFileUrl($result,$this->name.".java");
+		$http = str_replace(self::FORMAT_STATIC, $this->getStaticParams(), $http);
+
+		$result = $http;
+		$fileurl =$this->getFileUrl($result,$this->name.".swift");
 		return $result;
 
 
@@ -330,7 +267,7 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 	#@Overrides
 	function getStaticKey(){
 
-		return $this->JAVA_STATIC_FINAL_KEY;
+		return $this->SWIFT_STATIC_FINAL_KEY;
 
 	}
 
@@ -356,13 +293,13 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 					$name = $az;
 				}
 			}
-			$name = strtoupper($this->name."_type_$name");
+			$name = self::FORMAT_STATIC.strtoupper("_".$this->name."_$name");
 			$data = str_replace(Element::FORMAT_NOTE, $note, $static);
 			$data = str_replace(Element::FORMAT_CLASS, $name, $data);
 			$data = str_replace(Element::FORMAT_DATA_KEY, strval($value), $data);
 			$result .= $data;
 		}
-		return Element::FORMAT_ENTER.$result.Element::FORMAT_ENTER;
+		return $result;
 
 	}
 

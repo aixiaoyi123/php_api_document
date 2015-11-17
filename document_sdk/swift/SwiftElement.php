@@ -12,25 +12,25 @@ class SwiftElement extends JavaElement{
 	// Swift类型映射表
 	public $SWIFT_TYPE_KEY = array(
 	/**字符串*/
-	Element::TYPE_KEY_STRING           => "../document_sdk/swiftpan/format/string.swift",
+	Element::TYPE_KEY_STRING           => "/swiftpan/format/string.swift",
 	/**4位整型*/
-	Element::TYPE_KEY_INT        	   => "../document_sdk/swiftpan/format/int.swift",
+	Element::TYPE_KEY_INT        	   => "/swiftpan/format/int.swift",
 	/**长整形*/
-	Element::TYPE_KEY_LONG             => "../document_sdk/swiftpan/format/long.swift",
+	Element::TYPE_KEY_LONG             => "/swiftpan/format/long.swift",
 	/**浮点数*/
-	Element::TYPE_KEY_FLOAT            => "../document_sdk/swiftpan/format/float.swift",
+	Element::TYPE_KEY_FLOAT            => "/swiftpan/format/float.swift",
 	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN          => "../document_sdk/swiftpan/format/boolean.swift",
+	Element::TYPE_KEY_BOOLEAN          => "/swiftpan/format/boolean.swift",
 	/**数组队列*/
-	Element::TYPE_KEY_ARRAY            => "../document_sdk/swiftpan/format/array.swift",
+	Element::TYPE_KEY_ARRAY            => "/swiftpan/format/array.swift",
 	/**自定义类数组队列*/
-	Element::TYPE_KEY_ARRAY_CLASS      => "../document_sdk/swiftpan/format/array_class.swift",
+	Element::TYPE_KEY_ARRAY_CLASS      => "/swiftpan/format/array_class.swift",
 	/**自定义类*/
-	Element::TYPE_KEY_CLASS_CHILD      => "../document_sdk/swiftpan/format/class_child.swift",
+	Element::TYPE_KEY_CLASS_CHILD      => "/swiftpan/format/class_child.swift",
 	/**内部类函数*/
-	Element::TYPE_KEY_CLASS_NESTED     => "../document_sdk/swiftpan/format/class_nested.swift",
+	Element::TYPE_KEY_CLASS_NESTED     => "/swiftpan/format/class_nested.swift",
 	/**类*/
-	Element::TYPE_KEY_CLASS     	   => "../document_sdk/swiftpan/format/class.swift"
+	Element::TYPE_KEY_CLASS     	   => "/swiftpan/format/class.swift"
 	/**待扩展*/
 	);
 
@@ -62,25 +62,25 @@ class SwiftElement extends JavaElement{
 	// SWIFT解析映射表
 	public $SWIFT_PARSE_KEY = array(
 	/**字符串*/
-	Element::TYPE_KEY_STRING           => "../document_sdk/swiftpan/parse/string.swift",
+	Element::TYPE_KEY_STRING           => "/swiftpan/parse/string.swift",
 	/**4位整型*/
-	Element::TYPE_KEY_INT        	   => "../document_sdk/swiftpan/parse/int.swift",
+	Element::TYPE_KEY_INT        	   => "/swiftpan/parse/int.swift",
 	/**长整形*/
-	Element::TYPE_KEY_LONG             => "../document_sdk/swiftpan/parse/long.swift",
+	Element::TYPE_KEY_LONG             => "/swiftpan/parse/long.swift",
 	/**浮点数*/
-	Element::TYPE_KEY_FLOAT            => "../document_sdk/swiftpan/parse/float.swift",
+	Element::TYPE_KEY_FLOAT            => "/swiftpan/parse/float.swift",
 	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN          => "../document_sdk/swiftpan/parse/boolean.swift",
+	Element::TYPE_KEY_BOOLEAN          => "/swiftpan/parse/boolean.swift",
 	/**数组队列*/
-	Element::TYPE_KEY_ARRAY            => "../document_sdk/swiftpan/parse/array.swift",
+	Element::TYPE_KEY_ARRAY            => "/swiftpan/parse/array.swift",
 	/**自定义类数组队列*/
-	Element::TYPE_KEY_ARRAY_CLASS      => "../document_sdk/swiftpan/parse/array_class.swift",
+	Element::TYPE_KEY_ARRAY_CLASS      => "/swiftpan/parse/array_class.swift",
 	/**自定义类*/
-	Element::TYPE_KEY_CLASS_CHILD      => "../document_sdk/swiftpan/parse/class_child.swift",
+	Element::TYPE_KEY_CLASS_CHILD      => "/swiftpan/parse/class_child.swift",
 	/**内部类函数*/
-	Element::TYPE_KEY_CLASS_NESTED     => "../document_sdk/swiftpan/parse/class_nested.swift",
+	Element::TYPE_KEY_CLASS_NESTED     => "/swiftpan/parse/class_nested.swift",
 	/**类*/
-	Element::TYPE_KEY_CLASS     	   => "../document_sdk/swiftpan/parse/class.swift"
+	Element::TYPE_KEY_CLASS     	   => "/swiftpan/parse/class.swift"
 	/**待扩展*/
 	);
 
@@ -113,15 +113,15 @@ class SwiftElement extends JavaElement{
 	// SWIFT静态范围表
 	public $SWIFT_STATIC_FINAL_KEY = array(
 	/**字符串*/
-	Element::TYPE_KEY_STRING           => "../document_sdk/swiftpan/static/string.swift",
+	Element::TYPE_KEY_STRING           => "/swiftpan/static/string.swift",
 	/**4位整型*/
-	Element::TYPE_KEY_INT        	   => "../document_sdk/swiftpan/static/int.swift",
+	Element::TYPE_KEY_INT        	   => "/swiftpan/static/int.swift",
 	/**长整形*/
-	Element::TYPE_KEY_LONG             => "../document_sdk/swiftpan/static/long.swift",
+	Element::TYPE_KEY_LONG             => "/swiftpan/static/long.swift",
 	/**浮点数*/
-	Element::TYPE_KEY_FLOAT            => "../document_sdk/swiftpan/static/float.swift",
+	Element::TYPE_KEY_FLOAT            => "/swiftpan/static/float.swift",
 	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN          => "../document_sdk/swiftpan/static/boolean.swift",
+	Element::TYPE_KEY_BOOLEAN          => "/swiftpan/static/boolean.swift",
 	/**待扩展*/
 	);
 
@@ -230,7 +230,9 @@ class SwiftElement extends JavaElement{
 				$arr = explode("；",$key);
 				$data = $this->value;
 				foreach($arr as $u){
-					$data = $data[$u];
+					if(isset($data[$u])){
+						$data = $data[$u];
+					}
 				}
 
 				$class = $value->name;

@@ -31,12 +31,18 @@ function language_text($url)  #获取目标URL所打印的内容
 
 function language_new_cidian($value){
 
-	$azauto = ($_POST['azauto']=='')?urldecode($_GET['azauto']):$_POST['azauto'];
+	if(isset($_POST['azauto'])){
+		$azauto = $_POST['azauto'];
+	}else if(isset($_GET['azauto'])){
+		$azauto = $_GET['azauto'];
+	}else{
+		$azauto = "";
+	}
 	if(!$azauto){
 		return $value;
 	}
-	
-	
+
+
 	if(preg_match("/^[a-zA-Z\s]+$/",$value)){
 		$from="en";
 		$to="zh";
@@ -78,11 +84,17 @@ function language_new_cidian($value){
 
 function language_new_az($value){
 
-	$azauto = ($_POST['azauto']=='')?urldecode($_GET['azauto']):$_POST['azauto'];
+	if(isset($_POST['azauto'])){
+		$azauto = $_POST['azauto'];
+	}else if(isset($_GET['azauto'])){
+		$azauto = $_GET['azauto'];
+	}else{
+		$azauto = "";
+	}
 	if(!$azauto){
 		return $value;
 	}
-	
+
 	if(empty($value)){
 		return "";
 	}

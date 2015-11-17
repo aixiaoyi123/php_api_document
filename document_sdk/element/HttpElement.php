@@ -77,8 +77,9 @@ class HttpElement {
 	function getUrlName(){
 
 		$url = $_SERVER['PHP_SELF'];
-		$arr = explode( '/' , $url );
-		$filename= $arr[count($arr)-1];
+		//		$arr = explode( '/' , $url );
+		//		$filename= $arr[count($arr)-1];
+		$filename = $url;
 		return $filename;
 
 	}

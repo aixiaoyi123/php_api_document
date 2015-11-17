@@ -175,6 +175,8 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 			$element = new JavaNativeHttpElement();
 		}else if($this->parse == Element::PARSE_MODE_TXT){
 			$element = new TxtHttpElement();
+		}else if($this->parse == Element::PARSE_MODE_SWIFT){
+			$element = new SwiftHttpElement();
 		}else{
 
 		}
@@ -251,13 +253,17 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 		$value = str_replace(Element::FORMAT_ENTER,"\r\n",$value);
 		$value = str_replace(Element::ECHO_ENTER,"",$value);
 		$value = str_replace(Element::ECHO_SPLACE,"",$value);
-
+		
+		$cwd = $this->getSavePath();
+		
 		if($this->parse == Element::PARSE_MODE_JAVA){
-			$path = getcwd().JAVA_HTTP_DATA_SAVE_PATH;
+			$path = $cwd.JAVA_HTTP_DATA_SAVE_PATH;
 		}else if($this->parse == Element::PARSE_MODE_JAVA_NATIVE){
-			$path = getcwd().JAVA_NATIVE_HTTP_DATA_SAVE_PATH;
+			$path = $cwd.JAVA_NATIVE_HTTP_DATA_SAVE_PATH;
 		}else if($this->parse == Element::PARSE_MODE_TXT){
-			$path = getcwd().TXT_HTTP_DATA_SAVE_PATH;
+			$path = $cwd.TXT_HTTP_DATA_SAVE_PATH;
+		}else if($this->parse == Element::PARSE_MODE_SWIFT){
+			$path = $cwd.SWIFT_HTTP_DATA_SAVE_PATH;
 		}else{
 
 		}

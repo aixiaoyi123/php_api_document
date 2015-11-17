@@ -13,25 +13,25 @@ class JavaElement extends DataElement implements JavaFormatListener,JavaParseLis
 	// JAVA类型映射表
 	public $JAVA_TYPE_KEY = array(
 	/**字符串*/
-	Element::TYPE_KEY_STRING           => "../document_sdk/javapan/format/string.java",
+	Element::TYPE_KEY_STRING           => "/javapan/format/string.java",
 	/**4位整型*/
-	Element::TYPE_KEY_INT        	   => "../document_sdk/javapan/format/int.java",
+	Element::TYPE_KEY_INT        	   => "/javapan/format/int.java",
 	/**长整形*/
-	Element::TYPE_KEY_LONG             => "../document_sdk/javapan/format/long.java",
+	Element::TYPE_KEY_LONG             => "/javapan/format/long.java",
 	/**浮点数*/
-	Element::TYPE_KEY_FLOAT            => "../document_sdk/javapan/format/float.java",
+	Element::TYPE_KEY_FLOAT            => "/javapan/format/float.java",
 	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN          => "../document_sdk/javapan/format/boolean.java",
+	Element::TYPE_KEY_BOOLEAN          => "/javapan/format/boolean.java",
 	/**数组队列*/
-	Element::TYPE_KEY_ARRAY            => "../document_sdk/javapan/format/array.java",
+	Element::TYPE_KEY_ARRAY            => "/javapan/format/array.java",
 	/**自定义类数组队列*/
-	Element::TYPE_KEY_ARRAY_CLASS      => "../document_sdk/javapan/format/array_class.java",
+	Element::TYPE_KEY_ARRAY_CLASS      => "/javapan/format/array_class.java",
 	/**自定义类*/
-	Element::TYPE_KEY_CLASS_CHILD      => "../document_sdk/javapan/format/class_child.java",
+	Element::TYPE_KEY_CLASS_CHILD      => "/javapan/format/class_child.java",
 	/**内部类函数*/
-	Element::TYPE_KEY_CLASS_NESTED     => "../document_sdk/javapan/format/class_nested.java",
+	Element::TYPE_KEY_CLASS_NESTED     => "/javapan/format/class_nested.java",
 	/**类*/
-	Element::TYPE_KEY_CLASS     	   => "../document_sdk/javapan/format/class.java",
+	Element::TYPE_KEY_CLASS     	   => "/javapan/format/class.java",
 	/**头部引用*/
 	Element::TYPE_KEY_HEAD     	  	   => JAVA_HEAD
 	/**待扩展*/
@@ -65,25 +65,25 @@ class JavaElement extends DataElement implements JavaFormatListener,JavaParseLis
 	// JAVA解析映射表
 	public $JAVA_PARSE_KEY = array(
 	/**字符串*/
-	Element::TYPE_KEY_STRING           => "../document_sdk/javapan/parse/string.java",
+	Element::TYPE_KEY_STRING           => "/javapan/parse/string.java",
 	/**4位整型*/
-	Element::TYPE_KEY_INT        	   => "../document_sdk/javapan/parse/int.java",
+	Element::TYPE_KEY_INT        	   => "/javapan/parse/int.java",
 	/**长整形*/
-	Element::TYPE_KEY_LONG             => "../document_sdk/javapan/parse/long.java",
+	Element::TYPE_KEY_LONG             => "/javapan/parse/long.java",
 	/**浮点数*/
-	Element::TYPE_KEY_FLOAT            => "../document_sdk/javapan/parse/float.java",
+	Element::TYPE_KEY_FLOAT            => "/javapan/parse/float.java",
 	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN          => "../document_sdk/javapan/parse/boolean.java",
+	Element::TYPE_KEY_BOOLEAN          => "/javapan/parse/boolean.java",
 	/**数组队列*/
-	Element::TYPE_KEY_ARRAY            => "../document_sdk/javapan/parse/array.java",
+	Element::TYPE_KEY_ARRAY            => "/javapan/parse/array.java",
 	/**自定义类数组队列*/
-	Element::TYPE_KEY_ARRAY_CLASS      => "../document_sdk/javapan/parse/array_class.java",
+	Element::TYPE_KEY_ARRAY_CLASS      => "/javapan/parse/array_class.java",
 	/**自定义类*/
-	Element::TYPE_KEY_CLASS_CHILD      => "../document_sdk/javapan/parse/class_child.java",
+	Element::TYPE_KEY_CLASS_CHILD      => "/javapan/parse/class_child.java",
 	/**内部类函数*/
-	Element::TYPE_KEY_CLASS_NESTED     => "../document_sdk/javapan/parse/class_nested.java",
+	Element::TYPE_KEY_CLASS_NESTED     => "/javapan/parse/class_nested.java",
 	/**类*/
-	Element::TYPE_KEY_CLASS     	   => "../document_sdk/javapan/parse/class.java"
+	Element::TYPE_KEY_CLASS     	   => "/javapan/parse/class.java"
 	/**待扩展*/
 	);
 
@@ -116,15 +116,15 @@ class JavaElement extends DataElement implements JavaFormatListener,JavaParseLis
 	// JAVA静态范围表
 	public $JAVA_STATIC_FINAL_KEY = array(
 	/**字符串*/
-	Element::TYPE_KEY_STRING           => "../document_sdk/javapan/static/string.java",
+	Element::TYPE_KEY_STRING           => "/javapan/static/string.java",
 	/**4位整型*/
-	Element::TYPE_KEY_INT        	   => "../document_sdk/javapan/static/int.java",
+	Element::TYPE_KEY_INT        	   => "/javapan/static/int.java",
 	/**长整形*/
-	Element::TYPE_KEY_LONG             => "../document_sdk/javapan/static/long.java",
+	Element::TYPE_KEY_LONG             => "/javapan/static/long.java",
 	/**浮点数*/
-	Element::TYPE_KEY_FLOAT            => "../document_sdk/javapan/static/float.java",
+	Element::TYPE_KEY_FLOAT            => "/javapan/static/float.java",
 	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN          => "../document_sdk/javapan/static/boolean.java",
+	Element::TYPE_KEY_BOOLEAN          => "/javapan/static/boolean.java",
 	/**待扩展*/
 	);
 
@@ -207,7 +207,9 @@ class JavaElement extends DataElement implements JavaFormatListener,JavaParseLis
 				$arr = explode("；",$key);
 				$data = $this->value;
 				foreach($arr as $u){
-					$data = $data[$u];
+					if(isset($data[$u])){
+						$data = $data[$u];
+					}
 				}
 				$class = $value->name;
 				if(class_exists($class)){

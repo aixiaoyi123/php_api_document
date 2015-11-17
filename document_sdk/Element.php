@@ -223,11 +223,11 @@ class Element{
 			throw new Exception("getDictionary value is null!");
 		}
 
-		if($this->dictionary[$value] instanceof RangeElement){
+		if(isset($this->dictionary[$value]) && $this->dictionary[$value] instanceof RangeElement){
 			return $this->dictionary[$value];
-		}else if($this->dictionary[$value] instanceof NoteElement){
+		}else if(isset($this->dictionary[$value]) && $this->dictionary[$value] instanceof NoteElement){
 			return $this->dictionary[$value]->note;
-		}else{
+		}else if(isset($this->dictionary[$value])){
 			return $this->dictionary[$value];
 		}
 	}
@@ -241,7 +241,7 @@ class Element{
 			throw new Exception("getType value is null!");
 		}
 
-		if($this->dictionary[$value] instanceof NoteElement){
+		if(isset($this->dictionary[$value]) && $this->dictionary[$value] instanceof NoteElement){
 			return $this->dictionary[$value]->type;
 		}else{
 			return "";
@@ -256,9 +256,9 @@ class Element{
 		if (empty($value)){
 			throw new Exception("getFileContents value is null!");
 		}
-
-		if(file_exists($value)){
-			$contents = file_get_contents($value);
+		
+		if(file_exists(dirname(__FILE__).$value)){
+			$contents = file_get_contents(dirname(__FILE__).$value);
 		}else{
 			throw new Exception("getFileContents $value no exists!");
 		}
@@ -292,22 +292,32 @@ class Element{
 	function getHeadUrl() {
 
 
-		$url = $_SERVER['PHP_SELF'];
-		$arr = explode( '/' , $url );
-		$filename= $arr[count($arr)-1];
+		$url = $_SERVER['REQUEST_URI'];
+		$url = str_replace("&parse=".$this->parse,"",$url);
+		$url = str_replace("&amp;parse=".$this->parse,"",$url);
+		$url = str_replace("parse=".$this->parse,"",$url);
 		$data = array("API"=> "API输出数据",
 		self::PARSE_MODE_TXT=> "1.文本文档",
 		self::PARSE_MODE_JAVA=> "2.JAVA依赖请求与解析代码",
 		self::PARSE_MODE_JAVA_NATIVE=> "3.JAVA原生请求与解析代码",
 		self::PARSE_MODE_SWIFT=> "4.Swift1.2请求与解析代码");
-
+		$result = '';
 		foreach ($data as $key => $value) {
-			$document = ($_POST['document']=='')?urldecode($_GET['document']):$_POST['document'];
+			$result_url = $url;
 			if($key != $this->parse){
 				if($key == "API"){
-					$document = "";
+					if(isset($_POST['document'])){
+						$document = $_POST['document'];
+					}else if(isset($_GET['document'])){
+						$document = $_GET['document'];
+					}
+					$result_url = str_replace("&document=$document","",$result_url);
+					$result_url = str_replace("&amp;document=$document","",$result_url);
+					$result_url = str_replace("document=$document","",$result_url);
+				}else{
+					$result_url .= "&amp;parse=$key";
 				}
-				$result .= "<input type=button value=点击查看$value  onclick=\"window.open('../document/$filename?document=$document&amp;parse=$key')\"/>";
+				$result .= "<input type=button value=点击查看$value  onclick=\"window.open('$result_url')\"/>";
 				$result .=self::ECHO_SPLACE;
 			}
 		}
@@ -315,6 +325,15 @@ class Element{
 
 	}
 
+	/**
+	 * 获取保存路径
+	 * */
+	function getSavePath() {
 
+		$cwd = dirname(__FILE__);
+		$cwd = str_replace("document_sdk","document",$cwd);
+
+		return $cwd;
+	}
 }
 ?>

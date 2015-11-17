@@ -12,25 +12,25 @@ class TxtElement extends JavaElement{
 	// TXT类型映射表
 	public $TXT_TYPE_KEY = array(
 	/**字符串*/
-	Element::TYPE_KEY_STRING           => "../document_sdk/txtpan/format/string.java",
+	Element::TYPE_KEY_STRING           => "/txtpan/format/string.java",
 	/**4位整型*/
-	Element::TYPE_KEY_INT        	   => "../document_sdk/txtpan/format/int.java",
+	Element::TYPE_KEY_INT        	   => "/txtpan/format/int.java",
 	/**长整形*/
-	Element::TYPE_KEY_LONG             => "../document_sdk/txtpan/format/long.java",
+	Element::TYPE_KEY_LONG             => "/txtpan/format/long.java",
 	/**浮点数*/
-	Element::TYPE_KEY_FLOAT            => "../document_sdk/txtpan/format/float.java",
+	Element::TYPE_KEY_FLOAT            => "/txtpan/format/float.java",
 	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN          => "../document_sdk/txtpan/format/boolean.java",
+	Element::TYPE_KEY_BOOLEAN          => "/txtpan/format/boolean.java",
 	/**数组队列*/
-	Element::TYPE_KEY_ARRAY            => "../document_sdk/txtpan/format/array.java",
+	Element::TYPE_KEY_ARRAY            => "/txtpan/format/array.java",
 	/**自定义类数组队列*/
-	Element::TYPE_KEY_ARRAY_CLASS      => "../document_sdk/txtpan/format/array_class.java",
+	Element::TYPE_KEY_ARRAY_CLASS      => "/txtpan/format/array_class.java",
 	/**自定义类*/
-	Element::TYPE_KEY_CLASS_CHILD      => "../document_sdk/txtpan/format/class_child.java",
+	Element::TYPE_KEY_CLASS_CHILD      => "/txtpan/format/class_child.java",
 	/**内部类函数*/
-	Element::TYPE_KEY_CLASS_NESTED     => "../document_sdk/txtpan/format/class_nested.java",
+	Element::TYPE_KEY_CLASS_NESTED     => "/txtpan/format/class_nested.java",
 	/**类*/
-	Element::TYPE_KEY_CLASS     	   => "../document_sdk/txtpan/format/class.java"
+	Element::TYPE_KEY_CLASS     	   => "/txtpan/format/class.java"
 	/**待扩展*/
 	);
 
@@ -61,15 +61,15 @@ class TxtElement extends JavaElement{
 	// TXT静态范围表
 	public $TXT_STATIC_FINAL_KEY = array(
 	/**字符串*/
-	Element::TYPE_KEY_STRING           => "../document_sdk/txtpan/static/string.java",
+	Element::TYPE_KEY_STRING           => "/txtpan/static/string.java",
 	/**4位整型*/
-	Element::TYPE_KEY_INT        	   => "../document_sdk/txtpan/static/int.java",
+	Element::TYPE_KEY_INT        	   => "/txtpan/static/int.java",
 	/**长整形*/
-	Element::TYPE_KEY_LONG             => "../document_sdk/txtpan/static/long.java",
+	Element::TYPE_KEY_LONG             => "/txtpan/static/long.java",
 	/**浮点数*/
-	Element::TYPE_KEY_FLOAT            => "../document_sdk/txtpan/static/float.java",
+	Element::TYPE_KEY_FLOAT            => "/txtpan/static/float.java",
 	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN          => "../document_sdk/txtpan/static/boolean.java",
+	Element::TYPE_KEY_BOOLEAN          => "/txtpan/static/boolean.java",
 	/**待扩展*/
 	);
 
@@ -100,7 +100,9 @@ class TxtElement extends JavaElement{
 				$arr = explode("；",$key);
 				$data = $this->value;
 				foreach($arr as $u){
-					$data = $data[$u];
+					if(isset($data[$u])){
+						$data = $data[$u];
+					}
 				}
 
 				$class = $value->name;
@@ -161,7 +163,7 @@ class TxtElement extends JavaElement{
 		return $result;
 
 	}
-	
+
 	#@Overrides
 	function formatClass() {
 

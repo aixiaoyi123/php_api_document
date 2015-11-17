@@ -12,19 +12,19 @@ class TxtHttpElement extends DataHttpElement implements TxtHttpListener{
 	// TXT http映射表
 	public $TXT_HTTP_KEY = array(
 	/**字符串*/
-	Element::TYPE_KEY_STRING                => '../document_sdk/txtpan/http/string.java',
+	Element::TYPE_KEY_STRING                => '/txtpan/http/string.java',
 	/**4位整型*/
-	Element::TYPE_KEY_INT        	        => "../document_sdk/txtpan/http/int.java",
+	Element::TYPE_KEY_INT        	        => "/txtpan/http/int.java",
 	/**长整形*/
-	Element::TYPE_KEY_LONG                  => "../document_sdk/txtpan/http/long.java",
+	Element::TYPE_KEY_LONG                  => "/txtpan/http/long.java",
 	/**浮点数*/
-	Element::TYPE_KEY_FLOAT                 => "../document_sdk/txtpan/http/float.java",
+	Element::TYPE_KEY_FLOAT                 => "/txtpan/http/float.java",
 	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN               => "../document_sdk/txtpan/http/boolean.java",
+	Element::TYPE_KEY_BOOLEAN               => "/txtpan/http/boolean.java",
 	/**文件参数*/
-	DataHttpElement::HTTP_KEY_FILE          => "../document_sdk/txtpan/http/file.java",
+	DataHttpElement::HTTP_KEY_FILE          => "/txtpan/http/file.java",
 	/**整体*/
-	DataHttpElement::HTTP_KEY_HTTP          => "../document_sdk/txtpan/http/http.java"
+	DataHttpElement::HTTP_KEY_HTTP          => "/txtpan/http/http.java"
 	/**待扩展*/
 	);
 
@@ -52,15 +52,15 @@ class TxtHttpElement extends DataHttpElement implements TxtHttpListener{
 	// TXT静态范围表
 	public $TXT_STATIC_FINAL_KEY = array(
 	/**字符串*/
-	Element::TYPE_KEY_STRING           => "../document_sdk/txtpan/static/string.java",
+	Element::TYPE_KEY_STRING           => "/txtpan/static/string.java",
 	/**4位整型*/
-	Element::TYPE_KEY_INT        	   => "../document_sdk/txtpan/static/int.java",
+	Element::TYPE_KEY_INT        	   => "/txtpan/static/int.java",
 	/**长整形*/
-	Element::TYPE_KEY_LONG             => "../document_sdk/txtpan/static/long.java",
+	Element::TYPE_KEY_LONG             => "/txtpan/static/long.java",
 	/**浮点数*/
-	Element::TYPE_KEY_FLOAT            => "../document_sdk/txtpan/static/float.java",
+	Element::TYPE_KEY_FLOAT            => "/txtpan/static/float.java",
 	/**布尔型*/
-	Element::TYPE_KEY_BOOLEAN          => "../document_sdk/txtpan/static/boolean.java",
+	Element::TYPE_KEY_BOOLEAN          => "/txtpan/static/boolean.java",
 	/**待扩展*/
 	);
 
@@ -227,7 +227,6 @@ class TxtHttpElement extends DataHttpElement implements TxtHttpListener{
 			$element->initElement($key,$value,$this->getNoteElement($key));
 			$data = $data.$element->http();
 		}
-		$data .= $result.$object;
 		$http = str_replace(Element::FORMAT_DATA, $data, $http);
 
 		$url = $this->element->url;

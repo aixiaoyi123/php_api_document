@@ -4,6 +4,7 @@ include_once(dirname(__FILE__)."/javanative/JavaNativeElement.php");
 include_once(dirname(__FILE__)."/ios/IosElement.php");
 include_once(dirname(__FILE__)."/txt/TxtElement.php");
 include_once(dirname(__FILE__)."/swift/SwiftElement.php");
+include_once(dirname(__FILE__)."/swift/SwiftHttpElement.php");
 include_once(dirname(__FILE__)."/java/JavaHttpElement.php");
 include_once(dirname(__FILE__)."/javanative/JavaNativeHttpElement.php");
 include_once(dirname(__FILE__)."/txt/TxtHttpElement.php");
@@ -215,7 +216,7 @@ abstract class NoteClass{
 		}else if($parse == Element::PARSE_MODE_TXT){
 			$data = new TxtHttpElement();
 		}else if($parse == Element::PARSE_MODE_SWIFT){
-			return "";
+			$data = new SwiftHttpElement();
 		}else{
 
 		}
@@ -250,7 +251,7 @@ abstract class NoteClass{
 	function getVerison(){
 		$name = $this->getName();
 		$version=filemtime("../document/Class.$name.php");
-		date_default_timezone_set(PRC);
+		date_default_timezone_set("Asia/Shanghai");
 		$version = date("Ymd.H.i",$version);
 		return $version;
 	}

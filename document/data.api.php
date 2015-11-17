@@ -15,10 +15,31 @@ function document($value,$api)
 		return;
 	}
 
-	$document = ($_POST['document']=='')?urldecode($_GET['document']):$_POST['document'];
+	if(isset($_POST['document'])){
+		$document = $_POST['document'];
+	}else if(isset($_GET['document'])){
+		$document = $_GET['document'];
+	}else{
+		$document = "";
+	}
+
 	if($document == $DOCUMENT_KEY){
-		$parse = ($_POST['parse']=='')?urldecode($_GET['parse']):$_POST['parse'];
-		$azauto = ($_POST['azauto']=='')?urldecode($_GET['azauto']):$_POST['azauto'];
+
+		if(isset($_POST['parse'])){
+			$parse = $_POST['parse'];
+		}else if(isset($_GET['parse'])){
+			$parse = $_GET['parse'];
+		}else{
+			$parse = "";
+		}
+
+		if(isset($_POST['azauto'])){
+			$azauto = $_POST['azauto'];
+		}else if(isset($_GET['azauto'])){
+			$azauto = $_GET['azauto'];
+		}else{
+			$azauto = "";
+		}
 		if(empty($parse)){
 			$parse = "txt";
 		}

@@ -1,2 +1,2 @@
 <br />/** {note} */
-<br />let {!}:String = {?}
+<br />let {!}:String = "{?}"
