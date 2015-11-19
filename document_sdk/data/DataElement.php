@@ -160,6 +160,8 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 			$element = new TxtElement();
 		}else if($this->parse == Element::PARSE_MODE_SWIFT){
 			$element = new SwiftElement();
+		}else if($this->parse == Element::PARSE_MODE_IOS){
+			$element = new IosElement();
 		}else{
 			$element = new IosElement();
 		}
@@ -332,7 +334,7 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 		$value = str_replace(Element::ECHO_SPLACE,"",$value);
 
 		$cwd = $this->getSavePath();
-		
+
 		if($this->parse == Element::PARSE_MODE_JAVA){
 			$path = $cwd.JAVA_DATA_SAVE_PATH;
 		}else if($this->parse == Element::PARSE_MODE_JAVA_NATIVE){
@@ -341,6 +343,8 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 			$path = $cwd.TXT_DATA_SAVE_PATH;
 		}else if($this->parse == Element::PARSE_MODE_SWIFT){
 			$path = $cwd.SWIFT_DATA_SAVE_PATH;
+		}else if($this->parse == Element::PARSE_MODE_IOS){
+			$path = $cwd.IOS_DATA_SAVE_PATH;
 		}else{
 
 		}

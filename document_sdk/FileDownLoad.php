@@ -24,6 +24,12 @@ if($parse == Element::PARSE_MODE_JAVA){
 	}else{
 		$path = "../document".SWIFT_DATA_SAVE_PATH.$filename;
 	}
+}else if($parse == Element::PARSE_MODE_IOS){
+	if(!empty($http)){
+		$path = "../document".IOS_HTTP_DATA_SAVE_PATH.$filename;
+	}else{
+		$path = "../document".IOS_DATA_SAVE_PATH.$filename;
+	}
 }else if($parse == Element::PARSE_MODE_TXT){
 	if(!empty($http)){
 		$path = "../document".TXT_HTTP_DATA_SAVE_PATH.$filename;

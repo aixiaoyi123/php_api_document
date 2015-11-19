@@ -300,7 +300,9 @@ class Element{
 		self::PARSE_MODE_TXT=> "1.文本文档",
 		self::PARSE_MODE_JAVA=> "2.JAVA依赖请求与解析代码",
 		self::PARSE_MODE_JAVA_NATIVE=> "3.JAVA原生请求与解析代码",
-		self::PARSE_MODE_SWIFT=> "4.Swift1.2请求与解析代码");
+		self::PARSE_MODE_SWIFT=> "4.Swift1.2请求与解析代码",
+		self::PARSE_MODE_IOS=> "5.Ios_MJExtension解析代码"
+		);
 		$result = '';
 		foreach ($data as $key => $value) {
 			$result_url = $url;

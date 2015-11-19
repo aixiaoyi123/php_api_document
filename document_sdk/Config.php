@@ -82,4 +82,10 @@ define("SWIFT_DATA_SAVE_PATH", "/swift/http/data/");
 //SWIFT请求数据类保存路径
 define("SWIFT_HTTP_DATA_SAVE_PATH", "/swift/http/");
 
+
+//IOS数据类保存路径
+define("IOS_DATA_SAVE_PATH", "/ios/yousi/com/http/data/");
+//IOS请求数据类保存路径
+define("IOS_HTTP_DATA_SAVE_PATH", "/ios/yousi/com/http/");
+
 ?>

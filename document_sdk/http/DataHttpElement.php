@@ -177,6 +177,8 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 			$element = new TxtHttpElement();
 		}else if($this->parse == Element::PARSE_MODE_SWIFT){
 			$element = new SwiftHttpElement();
+		}else if($this->parse == Element::PARSE_MODE_IOS){
+			
 		}else{
 
 		}
@@ -264,6 +266,8 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 			$path = $cwd.TXT_HTTP_DATA_SAVE_PATH;
 		}else if($this->parse == Element::PARSE_MODE_SWIFT){
 			$path = $cwd.SWIFT_HTTP_DATA_SAVE_PATH;
+		}else if($this->parse == Element::PARSE_MODE_IOS){
+			$path = $cwd.IOS_HTTP_DATA_SAVE_PATH;
 		}else{
 
 		}

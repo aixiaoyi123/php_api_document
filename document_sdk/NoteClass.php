@@ -145,6 +145,8 @@ abstract class NoteClass{
 				return $element->getSwiftElement($value);
 			}else if($parse == Element::PARSE_MODE_JAVA_NATIVE){
 				return $element->getJavaNativeElement($value);
+			}else if($parse == Element::PARSE_MODE_IOS){
+				return $element->getIosElement($value);
 			}else{
 				return $element->getIosElement($value);
 			}
@@ -174,6 +176,8 @@ abstract class NoteClass{
 			$data = new TxtElement();
 		}else if($parse == Element::PARSE_MODE_SWIFT){
 			$data = new SwiftElement();
+		}else if($parse == Element::PARSE_MODE_IOS){
+			$data = new IosElement();
 		}else{
 			$data = new IosElement();
 		}
@@ -217,6 +221,8 @@ abstract class NoteClass{
 			$data = new TxtHttpElement();
 		}else if($parse == Element::PARSE_MODE_SWIFT){
 			$data = new SwiftHttpElement();
+		}else if($parse == Element::PARSE_MODE_IOS){
+			return "";
 		}else{
 
 		}
