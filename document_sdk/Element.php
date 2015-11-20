@@ -4,6 +4,7 @@ include_once(dirname(__FILE__)."/element/ClassElement.php");
 include_once(dirname(__FILE__)."/element/RangeElement.php");
 include_once(dirname(__FILE__)."/element/FileElement.php");
 include_once(dirname(__FILE__)."/baidu_language_api.php");
+include_once(dirname(__FILE__)."/FileDownLoad.php");
 
 /**
  * 结构体
@@ -183,7 +184,7 @@ class Element{
 	function setValue($value) {
 
 		if (empty($value)){
-			throw new Exception("setValue value is null!");
+			$value = array();
 		}
 		$this->value = $value;
 
@@ -208,7 +209,7 @@ class Element{
 	function setDictionary($value) {
 
 		if (empty($value)){
-			throw new Exception("setDictionary value is null!");
+			$value = array();
 		}
 		$this->dictionary = $value;
 	}
@@ -256,7 +257,7 @@ class Element{
 		if (empty($value)){
 			throw new Exception("getFileContents value is null!");
 		}
-		
+
 		if(file_exists(dirname(__FILE__).$value)){
 			$contents = file_get_contents(dirname(__FILE__).$value);
 		}else{
@@ -333,9 +334,36 @@ class Element{
 	function getSavePath() {
 
 		$cwd = dirname(__FILE__);
-		$cwd = str_replace("document_sdk","document",$cwd);
-
-		return $cwd;
+		$rootpath = explode('/',$cwd);
+		$savepath = explode('/',DOCUMENT_SAVE_ROOT_PATH);
+		$cwd = "/";
+		foreach ($rootpath as $key => $value) {
+			foreach ($savepath as $keyItem => $valueItem) {
+				if(!empty($valueItem)&& $valueItem == $value){
+					$cwd .= DOCUMENT_SAVE_ROOT_PATH;
+					$cwd = str_replace("//", "/", $cwd);
+					return $cwd;
+				}
+			}
+			if(!empty($value)){
+				$cwd .= $value."/";
+			}
+		}
+		return getcwd().DOCUMENT_SAVE_ROOT_PATH;
 	}
+	/**
+	 * 获取按钮下载路径
+	 * */
+	function getSaveFileUrl($button, $filename, $http = false) {
+	
+		$path = getPath($filename, $parse = $this->parse, $http);
+		$path = $this->getSavePath().$path;
+		$contents = file_get_contents($path);
+		$contents = base64_encode($contents);
+		$result = "<input type=button value=$button$filename  onclick=\"download_file_content('$filename','$contents')\"/>";
+		$this->setFileList($result);
+		return $result;
+	}
+
 }
 ?>

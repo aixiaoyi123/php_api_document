@@ -1,6 +1,5 @@
 <?php
-
-$DOCUMENT_KEY = "truxish2114558de";
+include_once(dirname(__FILE__)."/../document_sdk/Config.php");
 
 
 /**
@@ -8,9 +7,6 @@ $DOCUMENT_KEY = "truxish2114558de";
  */
 function document($value,$api)
 {
-
-	global $DOCUMENT_KEY;
-
 	if(!is_array($value)){
 		return;
 	}
@@ -23,7 +19,7 @@ function document($value,$api)
 		$document = "";
 	}
 
-	if($document == $DOCUMENT_KEY){
+	if($document == DOCUMENT_KEY){
 
 		if(isset($_POST['parse'])){
 			$parse = $_POST['parse'];
@@ -58,7 +54,11 @@ function document($value,$api)
 				}else{
 					$az = "字段自动英汉翻译【已开启】，关闭请删除请求参数【azauto】<br />";
 				}
-				echo iconv("UTF-8", "GBK",$az);
+				if($_SERVER['REQUEST_METHOD'] == 'POST'){
+					echo iconv($az);
+				}else{
+					echo iconv("UTF-8", "GBK",$az);
+				}
 
 				if($elment instanceof NoteClass && $elment instanceof HttpParamsListener){
 					$elment->document_http($elment,$value,$parse);

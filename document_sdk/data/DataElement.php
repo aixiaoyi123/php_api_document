@@ -350,9 +350,7 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 		}
 		@mkdir($path, 0777, true);
 		file_put_contents($path.$filename, $value);
-		$result = "<input type=button value=↓下载数据类↓$filename  onclick=\"window.open('../document_sdk/FileDownLoad.php?filename=$filename&amp;parse=".$this->parse."')\"/>";
-		$this->setFileList($result);
-		return $result;
+		return 	$this->getSaveFileUrl('↓下载数据类↓', $filename);
 
 	}
 

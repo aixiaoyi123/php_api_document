@@ -71,22 +71,20 @@ class JavaNativeHttpElement extends JavaHttpElement{
 
 		$HttpKey = $this->getHttpKey();
 		$note = parent::getNoteFormat();
-		if (!is_array($this->value)){
-			throw new Exception("httpHttp is_array error!");
-		}
 		$http = $HttpKey[DataHttpElement::HTTP_KEY_HTTP];
 		$http = parent::getFileContents($http);
 
 		$http = str_replace(Element::FORMAT_CLASS, $this->name, $http);
 		$data = "";
 		$params = "";
-
-		foreach ($this->value as $key => $value) {
-			$element = $this->getElement();
-			$element->initElement($key,$value,$this->getNoteElement($key));
-			$data = $data.$element->http();
-			if($element->type != DataHttpElement::HTTP_KEY_FILE){
-				$params .= " + \"&$key=\" + m".ucfirst($element->name);
+		if (is_array($this->value)){
+			foreach ($this->value as $key => $value) {
+				$element = $this->getElement();
+				$element->initElement($key,$value,$this->getNoteElement($key));
+				$data = $data.$element->http();
+				if($element->type != DataHttpElement::HTTP_KEY_FILE){
+					$params .= " + \"&$key=\" + m".ucfirst($element->name);
+				}
 			}
 		}
 		$data .= $result.$object;

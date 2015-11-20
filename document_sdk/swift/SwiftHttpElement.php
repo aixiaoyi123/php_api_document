@@ -189,28 +189,25 @@ class SwiftHttpElement extends JavaHttpElement{
 
 		$HttpKey = $this->getHttpKey();
 		$note = parent::getNoteFormat();
-		if (!is_array($this->value)){
-			throw new Exception("httpHttp is_array error!");
-		}
 		$http = $HttpKey[DataHttpElement::HTTP_KEY_HTTP];
 		$http = parent::getFileContents($http);
 
 		$http = str_replace(Element::FORMAT_CLASS, $this->name, $http);
 		$data = "";
 		$params = "";
-
-		foreach ($this->value as $key => $value) {
-			$element = $this->getElement();
-			$element->initElement($key,$value,$this->getNoteElement($key));
-			$data = $data.$element->http();
-			$this->addStaticParams($element);
-			if($element->type != DataHttpElement::HTTP_KEY_FILE){
-				$urlparams = str_replace(Element::FORMAT_CLASS, $key, self::FORMAT_URL_PARAMS);
-				$urlparams = str_replace(Element::FORMAT_DATA_KEY, ucfirst($element->name), $urlparams);
-				$params .= $urlparams.",";
+		if (is_array($this->value)){
+			foreach ($this->value as $key => $value) {
+				$element = $this->getElement();
+				$element->initElement($key,$value,$this->getNoteElement($key));
+				$data = $data.$element->http();
+				$this->addStaticParams($element);
+				if($element->type != DataHttpElement::HTTP_KEY_FILE){
+					$urlparams = str_replace(Element::FORMAT_CLASS, $key, self::FORMAT_URL_PARAMS);
+					$urlparams = str_replace(Element::FORMAT_DATA_KEY, ucfirst($element->name), $urlparams);
+					$params .= $urlparams.",";
+				}
 			}
 		}
-
 		if(!empty($params)){
 			$params = substr($params, 0, strlen($params)-1);
 		}

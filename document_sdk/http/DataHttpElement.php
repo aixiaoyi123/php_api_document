@@ -178,7 +178,7 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 		}else if($this->parse == Element::PARSE_MODE_SWIFT){
 			$element = new SwiftHttpElement();
 		}else if($this->parse == Element::PARSE_MODE_IOS){
-			
+				
 		}else{
 
 		}
@@ -255,9 +255,9 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 		$value = str_replace(Element::FORMAT_ENTER,"\r\n",$value);
 		$value = str_replace(Element::ECHO_ENTER,"",$value);
 		$value = str_replace(Element::ECHO_SPLACE,"",$value);
-		
+
 		$cwd = $this->getSavePath();
-		
+
 		if($this->parse == Element::PARSE_MODE_JAVA){
 			$path = $cwd.JAVA_HTTP_DATA_SAVE_PATH;
 		}else if($this->parse == Element::PARSE_MODE_JAVA_NATIVE){
@@ -271,12 +271,10 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 		}else{
 
 		}
-		
+
 		@mkdir($path, 0777, true);
 		file_put_contents($path.$filename, $value);
-		$result = "<input type=button value=↓下载请求类↓$filename  onclick=\"window.open('../document_sdk/FileDownLoad.php?filename=$filename&amp;http=true&amp;parse=".$this->parse."')\"/>";
-		$this->setFileList($result);
-		return $result;
+		return 	$this->getSaveFileUrl('↓下载请求类↓', $filename, true);
 
 	}
 

@@ -1,7 +1,6 @@
 <?php
 include_once(dirname(__FILE__)."/data.api.php");
 include_once(dirname(__FILE__)."/../classes/Json.class.php");
-include_once(dirname(__FILE__)."/../document_sdk/Element.php");
 
 $userinfo = array();
 $userinfo['uid'] =10086;
@@ -39,7 +38,7 @@ $pinfo['comments']=$comments;
 $pinfo['userinfo']=$userinfo;
 
 
-/**测试地址 Example.php?document=truxish2114558de&parse=java*/
+/**测试地址 Example.php?document=truxish2114558de*/
 document($pinfo,'PushInfoData');
 Json::echoJson($pinfo);
 

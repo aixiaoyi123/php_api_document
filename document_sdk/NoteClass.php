@@ -200,7 +200,14 @@ abstract class NoteClass{
 		}
 		$this->result .= $general;
 		$this->result =$data->getHeadUrl().$this->getFileList().$this->result;
-		echo iconv("UTF-8", "GBK", $this->result);
+
+		$js = $data->getFileContents('/js/download.js');
+		$base64js = $data->getFileContents('/js/jbase64.js');
+		if($_SERVER['REQUEST_METHOD'] == 'POST'){
+			echo $base64js.$js.$this->result;
+		}else{
+			echo iconv("UTF-8", "GBK", $base64js.$js.$this->result);
+		}
 
 	}
 
@@ -212,6 +219,9 @@ abstract class NoteClass{
 		$name = $this->getName();
 		$basename = $this->getName();
 		$name = str_replace("Data", "Http", $name);
+		if(strpos($name, "Http") === false){
+			$name .= "Http";
+		}
 		$note = $this->getNote();
 		if($parse == Element::PARSE_MODE_JAVA){
 			$data = new JavaHttpElement();
@@ -256,7 +266,9 @@ abstract class NoteClass{
 	 * */
 	function getVerison(){
 		$name = $this->getName();
-		$version=filemtime("../document/Class.$name.php");
+		$cwd = dirname(__FILE__);
+		$cwd = str_replace("document_sdk", "document", $cwd);
+		$version = filemtime($cwd . "/Class.$name.php");
 		date_default_timezone_set("Asia/Shanghai");
 		$version = date("Ymd.H.i",$version);
 		return $version;
