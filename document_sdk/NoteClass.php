@@ -118,8 +118,20 @@ abstract class NoteClass{
 		if(!empty($value)){
 			$element->setValue($value);
 		}
+
 		$dictionary = $this->getDictionary();
-		$element->setDictionary($dictionary[$note]);
+		$data = $dictionary[$note];
+		$element->setDictionary($data);
+
+		if(isset($data) && !is_array($data) && ($data instanceof ClassElement)){
+			//输出数据全为共享数据体
+			$value = array();
+			$value['data'] = $element->value;
+			$dictionary = array();
+			$dictionary['data'] = $data;
+			$element->setValue($value);
+			$element->setDictionary($dictionary);
+		}
 
 		return $element;
 
@@ -137,13 +149,13 @@ abstract class NoteClass{
 			if(!empty($data)){
 				$value = $data;
 			}
-			
+
 			if(is_array($value)){
 				if (array_key_exists(0,$value)){
 					$value = $value[0];
 				}
 			}
-				
+
 			if($parse == Element::PARSE_MODE_JAVA){
 				return $element->getJavaElement($value);
 			}else if($parse == Element::PARSE_MODE_TXT){
@@ -168,12 +180,6 @@ abstract class NoteClass{
 	 * 执行总流程
 	 * */
 	function document_format($value, $parse = Element::PARSE_MODE_JAVA){
-
-		if(is_array($value)){
-			if (array_key_exists(0,$value)){
-				$value = $value[0];
-			}
-		}
 
 		if($parse == Element::PARSE_MODE_JAVA){
 			$data = new JavaElement();

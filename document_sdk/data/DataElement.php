@@ -214,8 +214,10 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 		if (empty($value)){
 			throw new Exception("getClassElement value is null!");
 		}
-		if(isset($this->dictionary[$value]) && $this->dictionary[$value] instanceof ClassElement){
+		if(is_array($this->dictionary) && isset($this->dictionary[$value]) && $this->dictionary[$value] instanceof ClassElement){
 			return $this->dictionary[$value];
+		}else if(isset($this->dictionary) && $this->dictionary instanceof ClassElement){
+			return $this->dictionary;
 		}else{
 			$element = new ClassElement($this->getName($value),$this->getDictionary($value),$this->getShareMode($value),$this->getType($value));
 			return $element;
@@ -361,8 +363,7 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 	 * */
 	function format() {
 
-
-		if (empty($this->value)){
+		if (!isset($this->value) || $this->value == ""){
 			throw new Exception("format value is null!");
 		}
 
@@ -397,7 +398,7 @@ abstract class DataElement extends Element implements DataFormatListener,DataPar
 	 * */
 	function parse() {
 
-		if (empty($this->value)){
+		if (!isset($this->value) || $this->value == ""){
 			throw new Exception("parse value is null!");
 		}
 

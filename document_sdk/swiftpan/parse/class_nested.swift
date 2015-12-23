@@ -1,3 +1,3 @@
-<br />&nbsp;&nbsp;	init(dict:Dictionary<String,AnyObject>) {
+<br />&nbsp;&nbsp;	init(dict:Dictionary&lt;String,AnyObject&gt;) {
 {...}
 <br />&nbsp;&nbsp;	}

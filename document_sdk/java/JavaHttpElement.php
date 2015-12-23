@@ -101,7 +101,7 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 	#@Overrides
 	function autoType() {
 
-		if (empty($this->value)){
+		if (!isset($this->value) || $this->value == ""){
 			throw new Exception("getAutoType value is null!");
 		}
 

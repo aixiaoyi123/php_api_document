@@ -1,2 +1,2 @@
 <br />&nbsp;&nbsp;	/** {note} */
-<br />&nbsp;&nbsp;	var {?}:{!} = {!}(dict: Dictionary<String, AnyObject>())
+<br />&nbsp;&nbsp;	var {?}:{!} = {!}(dict: Dictionary&lt;String, AnyObject&gt;())

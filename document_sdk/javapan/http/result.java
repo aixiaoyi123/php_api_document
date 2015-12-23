@@ -7,7 +7,7 @@
 <br />
 <br />&nbsp;&nbsp;	@Override
 <br />&nbsp;&nbsp;	public TypeToken getTypeToken() {
-<br />&nbsp;&nbsp;&nbsp;&nbsp;		return new TypeToken<{?}>() {
+<br />&nbsp;&nbsp;&nbsp;&nbsp;		return new TypeToken&lt;{?}&gt;() {
 <br />&nbsp;&nbsp;&nbsp;&nbsp;		};
 <br />&nbsp;&nbsp;	}
 <br />

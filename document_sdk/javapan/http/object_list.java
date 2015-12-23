@@ -2,13 +2,13 @@
 <br />&nbsp;&nbsp;	@Override
 <br />&nbsp;&nbsp;	public Object getObject(String json, Type type) {
 <br />
-<br />&nbsp;&nbsp;&nbsp;&nbsp;		List<{?}> base = new ArrayList<{?}>();
+<br />&nbsp;&nbsp;&nbsp;&nbsp;		List&lt;{?}&gt; base = new ArrayList&lt;{?}&gt;();
 <br />&nbsp;&nbsp;&nbsp;&nbsp;		try {
 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			JSONArray data = new JSONArray(json);
 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			for (int index = 0; index < data.length(); index++) {
 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				JSONObject jsonObject = data.getJSONObject(index);
 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				{?} item = new {?}();
-<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				item.getBase(mContext, jsonObject);
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				item = item.getBase(mContext, jsonObject);
 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				base.add(item);
 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			}
 <br />&nbsp;&nbsp;&nbsp;&nbsp;		} catch (Exception e) {

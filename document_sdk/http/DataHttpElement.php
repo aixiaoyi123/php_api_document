@@ -285,7 +285,7 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 	function http() {
 
 
-		if (empty($this->value)){
+		if (!isset($this->value) || $this->value == ""){
 			$this->value = " ";
 		}
 
