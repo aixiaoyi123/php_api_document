@@ -31,7 +31,7 @@
 <br />&nbsp;&nbsp;	}
 <br />
 <br />&nbsp;&nbsp;	override func defaultParams() -> SADictionary {
-<br />&nbsp;&nbsp;&nbsp;&nbsp;		return [{params}]
+<br />&nbsp;&nbsp;&nbsp;&nbsp;		return SADictionary()
 <br />&nbsp;&nbsp;	}
 <br />
 <br />&nbsp;&nbsp;	required init(coder aDecoder: NSCoder) {

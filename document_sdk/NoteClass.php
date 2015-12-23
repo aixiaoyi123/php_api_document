@@ -137,6 +137,13 @@ abstract class NoteClass{
 			if(!empty($data)){
 				$value = $data;
 			}
+			
+			if(is_array($value)){
+				if (array_key_exists(0,$value)){
+					$value = $value[0];
+				}
+			}
+				
 			if($parse == Element::PARSE_MODE_JAVA){
 				return $element->getJavaElement($value);
 			}else if($parse == Element::PARSE_MODE_TXT){

@@ -209,11 +209,11 @@ class IosElement extends JavaElement{
 	function setClassParamsData($data){
 
 		if(!empty($data)){
-			
+				
 			if(strpos($data,'@class') === false){
 				$data = str_replace(Element::FORMAT_DATA_KEY, $data, self::FORMAT_CLASS_VALUE);
 			}
-			
+				
 			foreach ($this->class_params as $key => $value) {
 				if($value == $data){
 					return;
@@ -342,12 +342,10 @@ class IosElement extends JavaElement{
 		foreach ($dictionary as $itemkey => $value) {
 
 			if(($value instanceof ClassElement) && $value->isShare){
-				if(empty($key)){
-					$key = $itemkey;
-				}else{
-					$key .= "；".$itemkey;
+				if(!empty($key)){
+					$itemkey = $key ."；".$itemkey;
 				}
-				$arr = explode("；",$key);
+				$arr = explode("；",$itemkey);
 				$data = $this->value;
 				foreach($arr as $u){
 					if(isset($data[$u])){
@@ -370,12 +368,10 @@ class IosElement extends JavaElement{
 				}
 
 			}else if(is_array($value)){
-				if(empty($key)){
-					$key = $itemkey;
-				}else{
-					$key .= "；".$itemkey;
+				if(!empty($key)){
+					$itemkey = $key ."；".$itemkey;
 				}
-				$result .= $this->formatGeneralClass($value,$key);
+				$result .= $this->formatGeneralClass($value,$itemkey);
 			}
 		}
 

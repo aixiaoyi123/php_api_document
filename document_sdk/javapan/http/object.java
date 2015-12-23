@@ -4,7 +4,7 @@
 <br />&nbsp;&nbsp;&nbsp;&nbsp;		{?} base = new {?}();
 <br />&nbsp;&nbsp;&nbsp;&nbsp;		try {
 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			JSONObject jsonObject = new JSONObject(json);
-<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			base.getBase(mContext, jsonObject);
+<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			base = base.getBase(mContext, jsonObject);
 <br />&nbsp;&nbsp;&nbsp;&nbsp;		} catch (Exception e) {
 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			e.printStackTrace();
 <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			MyLog.d(RerviceHttp.class, "getObject error e:" + e.getMessage());

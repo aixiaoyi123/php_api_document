@@ -244,7 +244,7 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 
 	#@Overrides
 	function httpHttp() {
-
+		$object = "";
 		if($this->isListMode === false){
 			$result = $this->httpResult();
 			if($this->element->gson === false){
