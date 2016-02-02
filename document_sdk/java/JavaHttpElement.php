@@ -86,6 +86,22 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 	/**待扩展*/
 	);
 
+	// JAVA请求常量
+	public $JAVA_FINAL_KEY = array(
+	/**字符串*/
+	Element::TYPE_KEY_STRING           => "/javapan/final/string.java",
+	/**4位整型*/
+	Element::TYPE_KEY_INT        	   => "/javapan/final/int.java",
+	/**长整形*/
+	Element::TYPE_KEY_LONG             => "/javapan/final/long.java",
+	/**浮点数*/
+	Element::TYPE_KEY_FLOAT            => "/javapan/final/float.java",
+	/**布尔型*/
+	Element::TYPE_KEY_BOOLEAN          => "/javapan/final/boolean.java",
+	/**待扩展*/
+	);
+
+
 
 	//构造方法
 	function __construct() {
@@ -98,6 +114,14 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 		return $this->JAVA_HTTP_KEY;
 
 	}
+
+	#@Overrides
+	function getFinalKey(){
+
+		return $this->JAVA_FINAL_KEY;
+
+	}
+
 	#@Overrides
 	function autoType() {
 
@@ -163,7 +187,12 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 	#@Overrides
 	function httpBasic($key, $value) {
 
-		$HttpKey = $this->getHttpKey();
+
+		if(isset($this->final)){
+			$HttpKey = $this->getFinalKey();
+		}else{
+			$HttpKey = $this->getHttpKey();
+		}
 		if(empty($this->base_name)){
 			$note = parent::getNoteFormat();
 		}
@@ -176,6 +205,9 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 		$result = $http;
 		if(isset($note)){
 			$result = str_replace(Element::FORMAT_NOTE, $note, $result);
+		}
+		if(isset($this->final)){
+			$result = str_replace(DataHttpElement::HTTP_FINAL, $this->final, $result);
 		}
 		$static = $this->formatStatic($key);
 		if(!empty($static)){
@@ -263,6 +295,14 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 		$http = $HttpKey[DataHttpElement::HTTP_KEY_HTTP];
 		$http = parent::getFileContents($http);
 
+
+		$post = $this->element->post;
+		if($post === false){
+			$http = str_replace(DataHttpElement::HTTP_POST, "false", $http);
+		}else{
+			$http = str_replace(DataHttpElement::HTTP_POST, "true", $http);
+		}
+
 		$http = str_replace(Element::FORMAT_CLASS, $this->name, $http);
 		$data = "";
 		$params = "";
@@ -271,7 +311,10 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 				$element = $this->getElement();
 				$element->initElement($key,$value,$this->getNoteElement($key));
 				$data = $data.$element->http();
-				if($element->type != DataHttpElement::HTTP_KEY_FILE){
+				if($element->type == Element::TYPE_KEY_STRING && $post === false){
+					//字符串的时候,要解析中文字符
+					$params .= " + \"&$key=\" + encode(m".ucfirst($element->name).")";
+				}else if($element->type != DataHttpElement::HTTP_KEY_FILE){
 					$params .= " + \"&$key=\" + m".ucfirst($element->name);
 				}
 			}
@@ -284,12 +327,7 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 
 		$http = str_replace(DataHttpElement::HTTP_PARAMS, $params, $http);
 			
-		$post = $this->element->post;
-		if($post === false){
-			$http = str_replace(DataHttpElement::HTTP_POST, "false", $http);
-		}else{
-			$http = str_replace(DataHttpElement::HTTP_POST, "true", $http);
-		}
+
 			
 		$cookie = $this->element->cookie;
 		if($cookie === false){
@@ -304,7 +342,14 @@ class JavaHttpElement extends DataHttpElement implements JavaHttpListener{
 		}else{
 			$http = str_replace(DataHttpElement::HTTP_GETCOOKIE, "true", $http);
 		}
-			
+
+		$cache= $this->element->cache;
+		if($cache === false){
+			$http = str_replace(DataHttpElement::HTTP_CACHE, "false", $http);
+		}else{
+			$http = str_replace(DataHttpElement::HTTP_CACHE, "true", $http);
+		}
+
 		$tab= $this->element->tab;
 		if(empty($tab)){
 			$http = str_replace(DataHttpElement::HTTP_TAB, "null", $http);

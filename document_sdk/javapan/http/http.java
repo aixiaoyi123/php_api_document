@@ -15,7 +15,11 @@
 <br />
 <br />&nbsp;&nbsp;	@Override
 <br />&nbsp;&nbsp;	public String getHttpUrl() {
-<br />&nbsp;&nbsp;&nbsp;&nbsp;		return URL{params};
+<br />&nbsp;&nbsp;&nbsp;&nbsp;		String mHost = super.getHttpUrl();
+<br />&nbsp;&nbsp;&nbsp;&nbsp;		if (mHost == null) {
+<br />&nbsp;&nbsp;&nbsp;&nbsp;			mHost = "";
+<br />&nbsp;&nbsp;&nbsp;&nbsp;		}
+<br />&nbsp;&nbsp;&nbsp;&nbsp;		return mHost + URL{params};
 <br />&nbsp;&nbsp;	}
 <br />
 <br />&nbsp;&nbsp;	@Override
@@ -31,6 +35,11 @@
 <br />&nbsp;&nbsp;	@Override
 <br />&nbsp;&nbsp;	public boolean isGetCookieMode() {
 <br />&nbsp;&nbsp;&nbsp;&nbsp;		return {getcookie};
+<br />&nbsp;&nbsp;	}
+<br />	
+<br />&nbsp;&nbsp;	@Override
+<br />&nbsp;&nbsp;	public boolean isCacheMode() {
+<br />&nbsp;&nbsp;&nbsp;&nbsp;		return {cache};
 <br />&nbsp;&nbsp;	}
 <br />	
 <br />&nbsp;&nbsp;	/** 获取解析的标签，null的时候为默认的解析方式，即解析data字段 */

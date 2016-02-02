@@ -1,2 +1,2 @@
 <br />/** {note} */
-<br />static const NSString {!} = "{?}";
+<br />static const NSString *{!} = @"{?}";

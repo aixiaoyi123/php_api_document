@@ -13,6 +13,8 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 
 	/**url地址*/
 	const HTTP_URL ="{url}";
+	/**请求固定参数*/
+	const HTTP_FINAL ="{value}";
 	/**请求参数*/
 	const HTTP_PARAMS ="{params}";
 	/**是否是POST模式*/
@@ -21,6 +23,8 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 	const HTTP_COOKIE ="{cookie}";
 	/**是否是获取COOKIE模式*/
 	const HTTP_GETCOOKIE ="{getcookie}";
+	/**是否是缓存模式*/
+	const HTTP_CACHE ="{cache}";
 	/**json返回解析tab关键域*/
 	const HTTP_TAB ="{tab}";
 	/**是够gson序列化*/
@@ -55,6 +59,9 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 	// 是否是数组
 	public $isListMode = false;
 
+	// 请求固定参数
+	public $final;
+
 	function __construct($name = "", $note = "", $element = null, $parse = Element::PARSE_MODE_JAVA) {
 		parent::__construct($parse);
 		$this->name = $name;
@@ -66,6 +73,12 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 	 * 获取HTTP解析字典
 	 * */
 	abstract function getHttpKey();
+
+	/**
+	 * 获取HTTP常量请求字典
+	 * */
+	abstract function getFinalKey();
+
 
 	/**
 	 * 智能判断KEY
@@ -159,7 +172,7 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 	 * */
 	function openListMode() {
 
-		$isListMode = true;
+		$this->isListMode = true;
 
 	}
 
@@ -178,7 +191,7 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 		}else if($this->parse == Element::PARSE_MODE_SWIFT){
 			$element = new SwiftHttpElement();
 		}else if($this->parse == Element::PARSE_MODE_IOS){
-				
+			$element = new IosHttpElement();
 		}else{
 
 		}
@@ -196,7 +209,10 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 			throw new Exception("getNoteElement value is null!");
 		}
 
-		if($this->dictionary[$value] instanceof RangeElement){
+		if($this->dictionary[$value] instanceof FinalElement){
+			$element = new NoteElement($this->dictionary[$value],$this->getType($value));
+			return $element;
+		}else if($this->dictionary[$value] instanceof RangeElement){
 			$element = new NoteElement($this->dictionary[$value],$this->getType($value));
 			return $element;
 		}else if($this->dictionary[$value] instanceof NoteElement){
@@ -232,6 +248,11 @@ abstract class DataHttpElement extends Element implements DataHttpListener{
 			//开启自动翻译
 			$this->setNoteType(Element::NOTE_TYPE_AUTO);
 
+		}else if($note instanceof FinalElement){
+			/**常量请求解析体*/
+			$this->note = $note->note;
+			$this->type = $note->type;
+			$this->final = $note->final;
 		}else if($note instanceof RangeElement){
 			/**范围解析体*/
 			$this->note = $note->note;

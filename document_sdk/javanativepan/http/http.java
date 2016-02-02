@@ -30,6 +30,10 @@
 <br />&nbsp;&nbsp;&nbsp;&nbsp;		return {getcookie};
 <br />&nbsp;&nbsp;	}
 <br />	
+<br />&nbsp;&nbsp;	public boolean isCacheMode() {
+<br />&nbsp;&nbsp;&nbsp;&nbsp;		return {cache};
+<br />&nbsp;&nbsp;	}
+<br />	
 <br />&nbsp;&nbsp;	/** 获取解析的标签，null的时候为默认的解析方式，即解析data字段 */
 <br />&nbsp;&nbsp;	public String getDataTab() {
 <br />&nbsp;&nbsp;&nbsp;&nbsp;		// TODO Auto-generated method stub

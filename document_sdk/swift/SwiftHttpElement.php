@@ -49,6 +49,23 @@ class SwiftHttpElement extends JavaHttpElement{
 	/**待扩展*/
 	);
 
+	// SWIFT常量请求表
+	public $SWIFT_FINAL_KEY = array(
+	/**字符串*/
+	Element::TYPE_KEY_STRING           => "/swiftpan/final/string.swift",
+	/**4位整型*/
+	Element::TYPE_KEY_INT        	   => "/swiftpan/final/int.swift",
+	/**长整形*/
+	Element::TYPE_KEY_LONG             => "/swiftpan/final/long.swift",
+	/**浮点数*/
+	Element::TYPE_KEY_FLOAT            => "/swiftpan/final/float.swift",
+	/**布尔型*/
+	Element::TYPE_KEY_BOOLEAN          => "/swiftpan/final/boolean.swift",
+	/**待扩展*/
+	);
+
+
+
 	// 静态常量定义
 	public $static_params = array();
 
@@ -106,9 +123,21 @@ class SwiftHttpElement extends JavaHttpElement{
 	}
 
 	#@Overrides
+	function getFinalKey(){
+
+		return $this->SWIFT_FINAL_KEY;
+
+	}
+
+
+	#@Overrides
 	function httpBasic($key, $value) {
 
-		$HttpKey = $this->getHttpKey();
+		if(isset($this->final)){
+			$HttpKey = $this->getFinalKey();
+		}else{
+			$HttpKey = $this->getHttpKey();
+		}
 		if(empty($this->base_name)){
 			$note = parent::getNoteFormat();
 		}
@@ -121,6 +150,9 @@ class SwiftHttpElement extends JavaHttpElement{
 		$result = $http;
 		if(isset($note)){
 			$result = str_replace(Element::FORMAT_NOTE, $note, $result);
+		}
+		if(isset($this->final)){
+			$result = str_replace(DataHttpElement::HTTP_FINAL, $this->final, $result);
 		}
 		$static = $this->formatStatic($key);
 		if(!empty($static)){
@@ -239,7 +271,14 @@ class SwiftHttpElement extends JavaHttpElement{
 		}else{
 			$http = str_replace(DataHttpElement::HTTP_GETCOOKIE, "true", $http);
 		}
-			
+
+		$cache= $this->element->cache;
+		if($cache === false){
+			$http = str_replace(DataHttpElement::HTTP_CACHE, "false", $http);
+		}else{
+			$http = str_replace(DataHttpElement::HTTP_CACHE, "true", $http);
+		}
+
 		$tab= $this->element->tab;
 		if(empty($tab)){
 			$http = str_replace(DataHttpElement::HTTP_TAB, "null", $http);

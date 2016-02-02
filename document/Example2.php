@@ -15,7 +15,7 @@ $citylist[] = $city1;
 $citylist[] = $city2;
 
 /**测试地址 Example.php?document=truxish2114558de*/
-document($citylist,'GetCityList');
+document('GetCityList',$citylist);
 Json::echoJson($citylist);
 
 

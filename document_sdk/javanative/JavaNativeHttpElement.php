@@ -115,7 +115,14 @@ class JavaNativeHttpElement extends JavaHttpElement{
 		}else{
 			$http = str_replace(DataHttpElement::HTTP_GETCOOKIE, "true", $http);
 		}
-			
+
+		$cache= $this->element->cache;
+		if($cache === false){
+			$http = str_replace(DataHttpElement::HTTP_CACHE, "false", $http);
+		}else{
+			$http = str_replace(DataHttpElement::HTTP_CACHE, "true", $http);
+		}
+
 		$tab= $this->element->tab;
 		if(empty($tab)){
 			$http = str_replace(DataHttpElement::HTTP_TAB, "null", $http);

@@ -2,6 +2,7 @@
 include_once(dirname(__FILE__)."/java/JavaElement.php");
 include_once(dirname(__FILE__)."/javanative/JavaNativeElement.php");
 include_once(dirname(__FILE__)."/ios/IosElement.php");
+include_once(dirname(__FILE__)."/ios/IosHttpElement.php");
 include_once(dirname(__FILE__)."/txt/TxtElement.php");
 include_once(dirname(__FILE__)."/swift/SwiftElement.php");
 include_once(dirname(__FILE__)."/swift/SwiftHttpElement.php");
@@ -39,7 +40,7 @@ abstract class NoteClass{
 	}
 
 	/**
-	 * 获取所有文件下载
+	 * 获取所有文件下载输出
 	 * */
 	function getFileList(){
 
@@ -120,7 +121,11 @@ abstract class NoteClass{
 		}
 
 		$dictionary = $this->getDictionary();
-		$data = $dictionary[$note];
+		if(is_array($dictionary)){
+			$data = $dictionary[$note];
+		}else if($dictionary instanceof ClassElement){
+			$data = $dictionary->note;
+		}
 		$element->setDictionary($data);
 
 		if(isset($data) && !is_array($data) && ($data instanceof ClassElement)){
@@ -198,9 +203,13 @@ abstract class NoteClass{
 		$data ->setValue($value);
 		$data ->setVersion($this->getVerison());
 		$data = $this->getElement($data);
-		$end = $data->format();
-		$end = str_replace(Element::FORMAT_SPLACE,Element::ECHO_SPLACE,$end);
-		$end = str_replace(Element::FORMAT_ENTER,Element::ECHO_ENTER,$end);
+		if(!$this->isGeneralMode()){
+			$end = $data->format();
+			$end = str_replace(Element::FORMAT_SPLACE,Element::ECHO_SPLACE,$end);
+			$end = str_replace(Element::FORMAT_ENTER,Element::ECHO_ENTER,$end);
+		}else{
+			$end = "";
+		}
 
 		$general = $data->formatGeneral();
 		$general = str_replace(Element::FORMAT_SPLACE,Element::ECHO_SPLACE,$general);
@@ -219,7 +228,7 @@ abstract class NoteClass{
 		if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			echo $base64js.$js.$this->result;
 		}else{
-			echo iconv("UTF-8", "GBK", $base64js.$js.$this->result);
+			iconv_echo($base64js.$js.$this->result);
 		}
 
 	}
@@ -245,7 +254,7 @@ abstract class NoteClass{
 		}else if($parse == Element::PARSE_MODE_SWIFT){
 			$data = new SwiftHttpElement();
 		}else if($parse == Element::PARSE_MODE_IOS){
-			return "";
+			$data = new IosHttpElement();
 		}else{
 
 		}
@@ -253,15 +262,22 @@ abstract class NoteClass{
 		$data->setNote($note."请求");
 		$data->setParse($parse);
 		$data->setType(DataHttpElement::HTTP_KEY_HTTP);
-		$data->setElement($element->getHttpElement());
+		$httpelement = $element->getHttpElement();
+		$data->setElement($httpelement);
 		$data ->setValue($element->getHttpParamsValue());
 		$data ->setDictionary($element->getHttpKeys());
 		$data ->setVersion($this->getVerison());
+
+		if($httpelement->array){
+			$data ->openListMode();
+		}
+
 		if(is_array($value)){
 			if (array_key_exists(0,$value)){
 				$data ->openListMode();
 			}
 		}
+
 		$data ->setBaseName($basename);
 		$end = $data->http();
 		$end = str_replace(Element::FORMAT_SPLACE,Element::ECHO_SPLACE,$end);
@@ -281,7 +297,11 @@ abstract class NoteClass{
 		$name = $this->getName();
 		$cwd = dirname(__FILE__);
 		$cwd = str_replace("document_sdk", "document", $cwd);
-		$version = filemtime($cwd . "/Class.$name.php");
+		$path = $cwd . "/Class.$name.php";
+		if(!file_exists($path)){
+			$path = $cwd . "/data/Class.$name.php";
+		}
+		$version = filemtime($path);
 		date_default_timezone_set("Asia/Shanghai");
 		$version = date("Ymd.H.i",$version);
 		return $version;

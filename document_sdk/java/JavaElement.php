@@ -214,7 +214,11 @@ class JavaElement extends DataElement implements JavaFormatListener,JavaParseLis
 					$elment = new $class();
 					if($elment instanceof NoteClass){
 						$node = $elment->format($data,Element::PARSE_MODE_JAVA);
+						$node->setVersion($elment->getVerison());
 						$result = $result.Element::ECHO_ENTER.Element::ECHO_ENTER.$node->format().Element::ECHO_ENTER.Element::ECHO_ENTER;
+						//继续遍历下一层的共享数据
+						$general = $node->formatGeneral();
+						$result = $result.$general;
 						$this->setFileList($node->getFileList());
 					}else{
 						throw new Exception( $value->name." no extend NoteClass!");

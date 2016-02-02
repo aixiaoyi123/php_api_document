@@ -56,6 +56,7 @@ define("IOS_HTTP_DATA_SAVE_PATH", "/ios/yousi/com/http/");
 //JAVA头部文件
 define("JAVA_HEAD", "package ".JAVA_PACKNAME.";[^][^]"
 ."import java.util.ArrayList;[^]"
+."import java.util.List;[^]"
 ."import org.json.JSONArray;[^]"
 ."import org.json.JSONObject;[^]"
 ."import General.Inter.HttpBase;[^]"
@@ -65,7 +66,8 @@ define("JAVA_HEAD", "package ".JAVA_PACKNAME.";[^][^]"
 
 //JAVA原生头部文件
 define("JAVA_NATIVE_HEAD", "package ".JAVA_PACKNAME.";[^][^]"
-."import java.util.ArrayList;[^][^]"
+."import java.util.ArrayList;[^]"
+."import java.util.List;[^][^]"
 ."import org.json.JSONArray;[^]"
 ."import org.json.JSONObject;[^][^]"
 ."import android.content.Context;[^]"
@@ -78,7 +80,8 @@ define("JAVA_HTTP_HEAD", "package ".JAVA_HTTP_PACKNAME.";[^][^]"
 ."import java.lang.reflect.Type;[^]"
 ."import java.util.HashMap;[^]"
 ."import java.util.Map;[^]"
-."import java.util.ArrayList;[^][^]"
+."import java.util.ArrayList;[^]"
+."import java.util.List;[^][^]"
 ."import org.json.JSONObject;[^]"
 ."import org.json.JSONArray;[^][^]"
 ."import ".JAVA_PACKNAME.".{?};[^]"
@@ -95,12 +98,25 @@ define("JAVA_NATIVE_HTTP_HEAD", "package ".JAVA_HTTP_PACKNAME.";[^][^]"
 ."import java.lang.reflect.Type;[^]"
 ."import java.util.HashMap;[^]"
 ."import java.util.Map;[^]"
-."import java.util.ArrayList;[^][^]"
+."import java.util.ArrayList;[^]"
+."import java.util.List;[^][^]"
 ."import org.json.JSONObject;[^]"
 ."import org.json.JSONArray;[^][^]"
 ."import ".JAVA_PACKNAME.".{?};[^]"
 ."import android.content.Context;[^]"
 ."import android.util.Log;[^][^]"
 ."import com.google.gson.reflect.TypeToken;[^][^]");
+
+
+//IOS HTTP头部文件
+define("IOS_HTTP_HEAD", "#import \"BaseManage.h\"[^]"
+."#import \"{?}.h\"");
+
+
+function iconv_echo($msg) {
+	//$msg = iconv("UTF-8", "GBK",$msg);
+	echo $msg;
+}
+
 
 ?>

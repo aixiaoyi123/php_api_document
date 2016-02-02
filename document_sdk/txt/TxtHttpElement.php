@@ -64,6 +64,21 @@ class TxtHttpElement extends DataHttpElement implements TxtHttpListener{
 	/**待扩展*/
 	);
 
+	// TXT常量请求表
+	public $TXT_FINAL_KEY = array(
+	/**字符串*/
+	Element::TYPE_KEY_STRING           => "/txtpan/final/string.java",
+	/**4位整型*/
+	Element::TYPE_KEY_INT        	   => "/txtpan/final/int.java",
+	/**长整形*/
+	Element::TYPE_KEY_LONG             => "/txtpan/final/long.java",
+	/**浮点数*/
+	Element::TYPE_KEY_FLOAT            => "/txtpan/final/float.java",
+	/**布尔型*/
+	Element::TYPE_KEY_BOOLEAN          => "/txtpan/final/boolean.java",
+	/**待扩展*/
+	);
+
 
 	//构造方法
 	function __construct() {
@@ -76,6 +91,14 @@ class TxtHttpElement extends DataHttpElement implements TxtHttpListener{
 		return $this->TXT_HTTP_KEY;
 
 	}
+
+	#@Overrides
+	function getFinalKey(){
+
+		return $this->TXT_FINAL_KEY;
+
+	}
+
 	#@Overrides
 	function autoType() {
 
@@ -141,7 +164,11 @@ class TxtHttpElement extends DataHttpElement implements TxtHttpListener{
 	#@Overrides
 	function httpBasic($key, $value) {
 
-		$HttpKey = $this->getHttpKey();
+		if(isset($this->final)){
+			$HttpKey = $this->getFinalKey();
+		}else{
+			$HttpKey = $this->getHttpKey();
+		}
 		if(empty($this->base_name)){
 			$note = parent::getNoteFormat();
 		}
@@ -151,7 +178,13 @@ class TxtHttpElement extends DataHttpElement implements TxtHttpListener{
 		$http = $HttpKey[$key];
 		$http = parent::getFileContents($http);
 		$http = str_replace(Element::FORMAT_DATA_KEY, $value, $http);
-		$result = str_replace(Element::FORMAT_NOTE, $note, $http);
+		$result = $http;
+		if(isset($note)){
+			$result = str_replace(Element::FORMAT_NOTE, $note, $result);
+		}
+		if(isset($this->final)){
+			$result = str_replace(DataHttpElement::HTTP_FINAL, $this->final, $result);
+		}
 
 		$static = $this->formatStatic($key);
 		if(!empty($static)){
@@ -251,7 +284,14 @@ class TxtHttpElement extends DataHttpElement implements TxtHttpListener{
 		}else{
 			$http = str_replace(DataHttpElement::HTTP_GETCOOKIE, "true", $http);
 		}
-			
+
+		$cache= $this->element->cache;
+		if($cache === false){
+			$http = str_replace(DataHttpElement::HTTP_CACHE, "false", $http);
+		}else{
+			$http = str_replace(DataHttpElement::HTTP_CACHE, "true", $http);
+		}
+
 		$tab= $this->element->tab;
 		if(empty($tab)){
 			$http = str_replace(DataHttpElement::HTTP_TAB, "默认", $http);

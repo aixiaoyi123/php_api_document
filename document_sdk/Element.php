@@ -3,6 +3,7 @@ include_once(dirname(__FILE__)."/Config.php");
 include_once(dirname(__FILE__)."/element/ClassElement.php");
 include_once(dirname(__FILE__)."/element/RangeElement.php");
 include_once(dirname(__FILE__)."/element/FileElement.php");
+include_once(dirname(__FILE__)."/element/FinalElement.php");
 include_once(dirname(__FILE__)."/baidu_language_api.php");
 include_once(dirname(__FILE__)."/FileDownLoad.php");
 
@@ -52,6 +53,8 @@ class Element{
 	const FORMAT_DATA_KEY ="{?}";
 	/**对象名称 */
 	const FORMAT_CLASS ="{!}";
+	/**对象名称(大写) */
+	const FORMAT_CLASS_UPPER ="{!!}";
 	/**注解格式*/
 	const FORMAT_NOTE = "{note}";
 	/**空格格式 */

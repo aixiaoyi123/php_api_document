@@ -30,6 +30,10 @@
 <br />&nbsp;&nbsp;&nbsp;&nbsp;		return {getcookie}
 <br />&nbsp;&nbsp;	}
 <br />
+<br />&nbsp;&nbsp;	override func defaultCacheMode() -> Bool {
+<br />&nbsp;&nbsp;&nbsp;&nbsp;		return {cache}
+<br />&nbsp;&nbsp;	}
+<br />
 <br />&nbsp;&nbsp;	override func defaultParams() -> SADictionary {
 <br />&nbsp;&nbsp;&nbsp;&nbsp;		return SADictionary()
 <br />&nbsp;&nbsp;	}

@@ -5,7 +5,7 @@ include_once(dirname(__FILE__)."/../document_sdk/Config.php");
 /**
  * 输出字典配置
  */
-function document($value,$api)
+function document($api, $value = array())
 {
 	if(!is_array($value)){
 		return;
@@ -55,9 +55,9 @@ function document($value,$api)
 					$az = "字段自动英汉翻译【已开启】，关闭请删除请求参数【azauto】<br />";
 				}
 				if($_SERVER['REQUEST_METHOD'] == 'POST'){
-					echo iconv($az);
+					echo $az;
 				}else{
-					echo iconv("UTF-8", "GBK",$az);
+					iconv_echo($az);
 				}
 
 				if($elment instanceof NoteClass && $elment instanceof HttpParamsListener){
@@ -66,15 +66,15 @@ function document($value,$api)
 				if($elment instanceof NoteClass){
 					$elment->document_format($value,$parse);
 				}else{
-					echo $class." no extend NoteClass!";
+					iconv_echo($class." no extend NoteClass!");
 				}
 
 			}else{
-				echo $class.' class no found!';
+				iconv_echo($class.' class no found!');
 			}
 
 		}else{
-			echo $file_name.'  no found!';
+			iconv_echo($file_name.'  no found!');
 		}
 		exit;
 	}

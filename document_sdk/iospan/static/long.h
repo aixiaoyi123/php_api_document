@@ -1,2 +1,2 @@
-<br />/** {note} */
-<br />static const long {!} = {?};
+<br />/** {note} 长整形Long*/
+<br />static const NSInteger {!} = {?};

@@ -114,8 +114,12 @@ class IosElement extends JavaElement{
 	function setMClassData($data){
 
 		if(!empty($data)){
-			$data = str_replace(Element::FORMAT_DATA, $this->getMArrayClassData(), $data);
+			$value = $this->getMArrayClassData();
+			//if(!empty($value)){
+			//当且仅当内容不为空的时候
+			$data = str_replace(Element::FORMAT_DATA, $value, $data);
 			$this->m_class[] = $data;
+			//}
 		}
 
 	}
@@ -209,11 +213,11 @@ class IosElement extends JavaElement{
 	function setClassParamsData($data){
 
 		if(!empty($data)){
-				
+
 			if(strpos($data,'@class') === false){
 				$data = str_replace(Element::FORMAT_DATA_KEY, $data, self::FORMAT_CLASS_VALUE);
 			}
-				
+
 			foreach ($this->class_params as $key => $value) {
 				if($value == $data){
 					return;
@@ -358,7 +362,11 @@ class IosElement extends JavaElement{
 					$elment = new $class();
 					if($elment instanceof NoteClass){
 						$node = $elment->format($data,Element::PARSE_MODE_IOS);
+						$node->setVersion($elment->getVerison());
 						$result = $result.Element::ECHO_ENTER.Element::ECHO_ENTER.$node->format().Element::ECHO_ENTER.Element::ECHO_ENTER;
+						//继续遍历下一层的共享数据
+						$general = $node->formatGeneral();
+						$result = $result.$general;
 						$this->setFileList($node->getFileList());
 					}else{
 						throw new Exception( $value->name." no extend NoteClass!");
@@ -651,9 +659,11 @@ class IosElement extends JavaElement{
 
 		$fileurl =$this->getFileUrl($result,$this->divname.".h");
 		$m_result =$this->getMClassData();
-		$fileurl =$this->getFileUrl($m_result,$this->divname.".m");
-		$node = "<br /><br />--------------------------------【.m解释文件】--------------------------------";
-		$result .= $node.$m_result;
+		if(!empty($m_result)){
+			$fileurl =$this->getFileUrl($m_result,$this->divname.".m");
+			$node = "<br /><br />--------------------------------【.m解释文件】--------------------------------";
+			$result .= $node.$m_result;
+		}
 		return $result;
 	}
 
@@ -687,7 +697,7 @@ class IosElement extends JavaElement{
 					$name = $az;
 				}
 			}
-			$name = strtoupper($this->name."_$name");
+			$name = self::FORMAT_STATIC.strtoupper("_".$this->name."_$name");
 			$data = str_replace(Element::FORMAT_NOTE, $note, $static);
 			$data = str_replace(Element::FORMAT_CLASS, $name, $data);
 			$data = str_replace(Element::FORMAT_DATA_KEY, strval($value), $data);

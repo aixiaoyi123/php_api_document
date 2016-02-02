@@ -39,7 +39,7 @@ $pinfo['userinfo']=$userinfo;
 
 
 /**测试地址 Example.php?document=truxish2114558de*/
-document($pinfo,'PushInfoData');
+document('PushInfoData',$pinfo);
 Json::echoJson($pinfo);
 
 
